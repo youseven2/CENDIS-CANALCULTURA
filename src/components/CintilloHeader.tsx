@@ -42,20 +42,6 @@ export function CintilloHeader({
               type="button"
               onClick={onGoHome}
               title={t.home}
-              aria-label={`Cultura Venezuela - ${t.home}`}
-              className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
-            >
-              <img
-                src="/logos/cultura-venezuela.jpg"
-                alt="Cultura Venezuela"
-                className="h-6 sm:h-9 w-auto object-contain rounded-md"
-              />
-            </button>
-            <div className="h-5 sm:h-6 w-px bg-[#94A3B8]" />
-            <button
-              type="button"
-              onClick={onGoHome}
-              title={t.home}
               aria-label={`CENDIS - ${t.home}`}
               className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
             >
@@ -63,6 +49,20 @@ export function CintilloHeader({
                 src="/logos/cendis.jpg"
                 alt="Centro Nacional del Disco - CENDIS"
                 className="h-5 sm:h-8 w-auto object-contain rounded-md"
+              />
+            </button>
+            <div className="h-5 sm:h-6 w-px bg-[#94A3B8]" />
+            <button
+              type="button"
+              onClick={onGoHome}
+              title={t.home}
+              aria-label={`Canal Cultura - ${t.home}`}
+              className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+            >
+              <img
+                src="/logos/cultura-venezuela.jpg"
+                alt="Canal Cultura Venezuela"
+                className="h-6 sm:h-9 w-auto object-contain rounded-md"
               />
             </button>
           </div>

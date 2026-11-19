@@ -88,8 +88,8 @@ const BRAND_BUTTON_STYLES: Record<InstitutionSocial['id'], string> = {
 const LABELS = {
   es: {
     title: 'Redes Sociales Oficiales',
-    subtitle: 'Conéctate con Canal Cultura y CENDIS en nuestras plataformas digitales',
-    canalTitle: 'Canal Cultura',
+    subtitle: 'Conéctate con CENDIS y CANAL CULTURA en nuestras plataformas digitales',
+    canalTitle: 'CANAL CULTURA',
     canalDesc: 'Señal audiovisual y programación cultural',
     cendisTitle: 'CENDIS',
     cendisDesc: 'Centro Nacional del Disco',
@@ -97,8 +97,8 @@ const LABELS = {
   },
   en: {
     title: 'Official Social Media',
-    subtitle: 'Connect with Canal Cultura and CENDIS across our digital platforms',
-    canalTitle: 'Canal Cultura',
+    subtitle: 'Connect with CENDIS and CANAL CULTURA across our digital platforms',
+    canalTitle: 'CANAL CULTURA',
     canalDesc: 'Audiovisual broadcast & cultural schedule',
     cendisTitle: 'CENDIS',
     cendisDesc: 'National Disc Center',
@@ -149,46 +149,9 @@ export function SocialsModal({ isOpen, onClose, language }: SocialsModalProps) {
           </button>
         </div>
 
-        {/* Módulos lado a lado: Canal Cultura | CENDIS */}
+        {/* Módulos lado a lado: CENDIS (izquierda) | CANAL CULTURA (derecha) */}
         <div className="p-4 sm:p-6 overflow-y-auto custom-scroll grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Módulo Canal Cultura */}
-          <div className="rounded-2xl bg-[#CBD5E1]/70 border-2 border-[#153684]/35 p-4 space-y-3 shadow-sm">
-            <div className="flex items-center gap-3 pb-2.5 border-b border-[#94A3B8]/50">
-              <div className="bg-white rounded-xl p-1 border border-[#94A3B8]/60 shrink-0 shadow-sm">
-                <img
-                  src="/logos/cultura-venezuela.jpg"
-                  alt={t.canalTitle}
-                  className="h-9 w-auto object-contain rounded"
-                />
-              </div>
-              <div className="min-w-0">
-                <h4 className="font-display font-extrabold text-base text-[#153684] truncate">
-                  {t.canalTitle}
-                </h4>
-                <p className="text-[11px] text-[#334155] truncate">{t.canalDesc}</p>
-              </div>
-            </div>
-
-            <div className="space-y-2.5">
-              {CANAL_CULTURA_SOCIALS.map((item) => (
-                <a
-                  key={item.id}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-display font-bold text-sm shadow-md hover:opacity-95 active:scale-[0.98] transition-all ${BRAND_BUTTON_STYLES[item.id]}`}
-                >
-                  <span className="flex items-center gap-2.5">
-                    <BrandIcon id={item.id} />
-                    <span>{item.name}</span>
-                  </span>
-                  <span className="text-xs font-medium opacity-90 truncate">{item.handle}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Módulo CENDIS */}
+          {/* Módulo CENDIS (izquierda) */}
           <div className="rounded-2xl bg-[#CBD5E1]/70 border-2 border-[#C81D25]/35 p-4 space-y-3 shadow-sm">
             <div className="flex items-center gap-3 pb-2.5 border-b border-[#94A3B8]/50">
               <div className="bg-white rounded-xl p-1 border border-[#94A3B8]/60 shrink-0 shadow-sm">
@@ -208,6 +171,43 @@ export function SocialsModal({ isOpen, onClose, language }: SocialsModalProps) {
 
             <div className="space-y-2.5">
               {CENDIS_SOCIALS.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-display font-bold text-sm shadow-md hover:opacity-95 active:scale-[0.98] transition-all ${BRAND_BUTTON_STYLES[item.id]}`}
+                >
+                  <span className="flex items-center gap-2.5">
+                    <BrandIcon id={item.id} />
+                    <span>{item.name}</span>
+                  </span>
+                  <span className="text-xs font-medium opacity-90 truncate">{item.handle}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Módulo CANAL CULTURA (derecha) */}
+          <div className="rounded-2xl bg-[#CBD5E1]/70 border-2 border-[#153684]/35 p-4 space-y-3 shadow-sm">
+            <div className="flex items-center gap-3 pb-2.5 border-b border-[#94A3B8]/50">
+              <div className="bg-white rounded-xl p-1 border border-[#94A3B8]/60 shrink-0 shadow-sm">
+                <img
+                  src="/logos/cultura-venezuela.jpg"
+                  alt={t.canalTitle}
+                  className="h-9 w-auto object-contain rounded"
+                />
+              </div>
+              <div className="min-w-0">
+                <h4 className="font-display font-extrabold text-base text-[#153684] uppercase truncate">
+                  {t.canalTitle}
+                </h4>
+                <p className="text-[11px] text-[#334155] truncate">{t.canalDesc}</p>
+              </div>
+            </div>
+
+            <div className="space-y-2.5">
+              {CANAL_CULTURA_SOCIALS.map((item) => (
                 <a
                   key={item.id}
                   href={item.url}
