@@ -206,6 +206,7 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
           description: 'Actualidad cultural, convocatorias y eventos del ente.',
           category: 'news',
           accent: '#0F766E',
+          externalUrl: 'https://t.me/canalcultura_ve',
           modalType: 'news',
         },
         {
@@ -405,6 +406,7 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
           description: 'Cultural updates, open calls, and institutional events.',
           category: 'news',
           accent: '#0F766E',
+          externalUrl: 'https://t.me/canalcultura_ve',
           modalType: 'news',
         },
         {
