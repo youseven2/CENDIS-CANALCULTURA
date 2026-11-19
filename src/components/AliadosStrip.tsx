@@ -17,54 +17,77 @@ export const CENDIS_ALLIES: AllyItem[] = [
     shortName: 'CENAF',
     fullNameEs: 'Centro Nacional de Fotografía',
     fullNameEn: 'National Photography Center (CENAF)',
-    descEs: 'Ente adscrito al Ministerio del Poder Popular para la Cultura dedicado a la preservación y difusión fotográfica.',
-    descEn: "Agency attached to the Ministry of People's Power for Culture dedicated to photographic preservation and outreach.",
+    descEs:
+      'Ente adscrito al Ministerio del Poder Popular para la Cultura dedicado a la preservación y difusión fotográfica.',
+    descEn:
+      "Agency attached to the Ministry of People's Power for Culture dedicated to photographic preservation and outreach.",
     accent: '#153684',
   },
   {
-    id: 'cenat',
-    shortName: 'CENAT',
+    id: 'teatro',
+    shortName: 'TEATRO',
     fullNameEs: 'Centro Nacional de Teatro',
-    fullNameEn: 'National Theater Center (CENAT)',
-    descEs: 'Ente del Ministerio del Poder Popular para la Cultura impulsor de las artes escénicas y el teatro nacional.',
-    descEn: "Ministry of People's Power for Culture agency promoting performing arts and national theater.",
+    fullNameEn: 'National Theater Center',
+    descEs:
+      'Ente del Ministerio del Poder Popular para la Cultura impulsor de las artes escénicas y la red nacional de teatros.',
+    descEn:
+      "Ministry of People's Power for Culture agency promoting performing arts and the national theater network.",
     accent: '#B12722',
   },
   {
-    id: 'cinemateca',
-    shortName: 'Cinemateca',
-    fullNameEs: 'Fundación Cinemateca Nacional',
-    fullNameEn: 'National Cinematheque Foundation',
-    descEs: 'Ente adscrito al Ministerio de Cultura encargado del resguardo y proyección del patrimonio cinematográfico.',
-    descEn: 'Ministry of Culture agency responsible for safeguarding and screening film heritage.',
-    accent: '#334155',
-  },
-  {
-    id: 'teatros',
-    shortName: 'Teatros',
-    fullNameEs: 'Red Nacional de Teatros',
-    fullNameEn: 'National Theater Network',
-    descEs: 'Espacios culturales y salas escénicas adscritas al Ministerio del Poder Popular para la Cultura.',
-    descEn: "Cultural venues and performing halls attached to the Ministry of People's Power for Culture.",
-    accent: '#D97706',
-  },
-  {
     id: 'alba-ciudad',
-    shortName: 'Alba Ciudad',
+    shortName: 'ALBA CIUDAD',
     fullNameEs: 'Alba Ciudad 96.3 FM',
     fullNameEn: 'Alba Ciudad 96.3 FM',
-    descEs: 'Emisora cultural del Ministerio del Poder Popular para la Cultura al servicio de la música y la información.',
-    descEn: "Cultural radio station of the Ministry of People's Power for Culture serving music and information.",
+    descEs:
+      'Emisora cultural del Ministerio del Poder Popular para la Cultura al servicio de la música y la información.',
+    descEn:
+      "Cultural radio station of the Ministry of People's Power for Culture serving music and information.",
     accent: '#0F766E',
   },
   {
-    id: 'museos',
-    shortName: 'Museos',
-    fullNameEs: 'Fundación Museos Nacionales',
-    fullNameEn: 'National Museums Foundation',
-    descEs: 'Red de museos adscrita al Ministerio de Cultura para la preservación de las artes visuales y la historia.',
-    descEn: 'Network of museums attached to the Ministry of Culture for visual arts and history preservation.',
+    id: 'danza',
+    shortName: 'DANZA',
+    fullNameEs: 'Centro Nacional de Danza',
+    fullNameEn: 'National Dance Center',
+    descEs:
+      'Ente adscrito al Ministerio del Poder Popular para la Cultura dedicado al fomento y proyección de la danza nacional.',
+    descEn:
+      "Agency attached to the Ministry of People's Power for Culture dedicated to promoting national dance.",
+    accent: '#D97706',
+  },
+  {
+    id: 'musica',
+    shortName: 'MÚSICA',
+    fullNameEs: 'Compañía Nacional de Música',
+    fullNameEn: 'National Music Company',
+    descEs:
+      'Ente del Ministerio del Poder Popular para la Cultura dedicado a la promoción de las expresiones musicales.',
+    descEn:
+      "Ministry of People's Power for Culture agency dedicated to promoting musical expressions.",
     accent: '#0284C7',
+  },
+  {
+    id: 'circo',
+    shortName: 'CIRCO',
+    fullNameEs: 'Artes Circenses Nacionales',
+    fullNameEn: 'National Circus Arts',
+    descEs:
+      'Expresión y formación circense adscrita al Ministerio del Poder Popular para la Cultura.',
+    descEn:
+      "Circus arts training and cultural outreach attached to the Ministry of People's Power for Culture.",
+    accent: '#7C3AED',
+  },
+  {
+    id: 'aen',
+    shortName: 'AEN',
+    fullNameEs: 'Ente Adscrito AEN · Cultura',
+    fullNameEn: 'AEN Affiliated Cultural Entity',
+    descEs:
+      'Ente aliado adscrito al Ministerio del Poder Popular para la Cultura en articulación con el CENDIS.',
+    descEn:
+      "Allied agency attached to the Ministry of People's Power for Culture working alongside CENDIS.",
+    accent: '#334155',
   },
 ];
 

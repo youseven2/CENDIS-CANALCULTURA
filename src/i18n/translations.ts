@@ -37,6 +37,7 @@ export interface TranslationBundle {
     home: string;
     aboutUs: string;
     orgChart: string;
+    events: string;
     searchPlaceholder: string;
     searchButtonTitle: string;
     languageLabel: string;
@@ -99,6 +100,7 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
       home: 'Home',
       aboutUs: 'Conócenos',
       orgChart: 'Organigrama',
+      events: 'Eventos',
       searchPlaceholder: 'Buscar en la página...',
       searchButtonTitle: 'Buscar dentro de la página',
       languageLabel: 'Idioma',
@@ -297,6 +299,7 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
       home: 'Home',
       aboutUs: 'About Us',
       orgChart: 'Org Chart',
+      events: 'Events',
       searchPlaceholder: 'Search within page...',
       searchButtonTitle: 'Search within this page',
       languageLabel: 'Language',

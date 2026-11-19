@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { AdminPanelModal } from './components/AdminPanelModal';
 import { AliadosModal } from './components/AliadosModal';
 import { AliadosStrip, AllyItem } from './components/AliadosStrip';
 import { CintilloHeader } from './components/CintilloHeader';
 import { ConocenosModal } from './components/ConocenosModal';
+import { EventosModal } from './components/EventosModal';
 import { FloatingSocials } from './components/FloatingSocials';
 import { FooterCintillo } from './components/FooterCintillo';
 import { HeroCarousel } from './components/HeroCarousel';
@@ -13,39 +15,30 @@ import { SearchOverlay } from './components/SearchOverlay';
 import { SocialsModal } from './components/SocialsModal';
 import { StatsLoginModal } from './components/StatsLoginModal';
 import { useDeviceType } from './hooks/useDeviceType';
+import { useEventsStore } from './hooks/useEventsStore';
 import { usePortalStats } from './hooks/usePortalStats';
 import { Language, TRANSLATIONS, TranslatedLink } from './i18n/translations';
 
 export function App() {
   const deviceInfo = useDeviceType();
   const { stats, trackContentView } = usePortalStats();
+  const { events, addEvent, deleteEvent } = useEventsStore();
   const [language, setLanguage] = useState<Language>('es');
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isConocenosOpen, setIsConocenosOpen] = useState(false);
   const [isOrganigramaOpen, setIsOrganigramaOpen] = useState(false);
+  const [isEventosOpen, setIsEventosOpen] = useState(false);
   const [isSocialsOpen, setIsSocialsOpen] = useState(false);
   const [isStatsLoginOpen, setIsStatsLoginOpen] = useState(false);
-  const [isStatsOpen, setIsStatsOpen] = useState(false);
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
   const [selectedAlly, setSelectedAlly] = useState<AllyItem | null>(null);
 
   const t = TRANSLATIONS[language];
   const deviceLabel = t.header.deviceLabels[deviceInfo.device];
-  const statsLink: TranslatedLink = {
-    id: 'estadisticas-admin',
-    title: language === 'es' ? 'Estadísticas del Portal' : 'Portal Statistics',
-    description:
-      language === 'es'
-        ? 'Tiempo de visualización, visitas, países y contenido más visto.'
-        : 'Viewing time, total visits, countries, and most viewed content.',
-    category: 'reportes',
-    accent: '#B12722',
-    modalType: 'reports',
-  };
-  const selectedLink = isStatsOpen
-    ? statsLink
-    : selectedLinkId !== null
+  const selectedLink =
+    selectedLinkId !== null
       ? t.linksPanel.links.find((l) => l.id === selectedLinkId) ?? null
       : null;
 
@@ -58,9 +51,10 @@ export function App() {
     setIsSearchOpen(false);
     setIsConocenosOpen(false);
     setIsOrganigramaOpen(false);
+    setIsEventosOpen(false);
     setIsSocialsOpen(false);
     setIsStatsLoginOpen(false);
-    setIsStatsOpen(false);
+    setIsAdminPanelOpen(false);
     setSelectedAlly(null);
     setActiveSlide(0);
   };
@@ -95,6 +89,10 @@ export function App() {
         onOpenOrganigrama={() => {
           trackContentView('organigrama');
           setIsOrganigramaOpen(true);
+        }}
+        onOpenEventos={() => {
+          trackContentView('eventos');
+          setIsEventosOpen(true);
         }}
         onGoHome={handleGoHome}
         t={t.header}
@@ -190,6 +188,14 @@ export function App() {
         device={deviceInfo.device}
       />
 
+      {/* Modal Eventos (Agenda Mensual) */}
+      <EventosModal
+        isOpen={isEventosOpen}
+        onClose={() => setIsEventosOpen(false)}
+        events={events}
+        language={language}
+      />
+
       {/* Modal Aliados del CENDIS */}
       <AliadosModal
         selectedAlly={selectedAlly}
@@ -197,18 +203,31 @@ export function App() {
         language={language}
       />
 
-      {/* Login oculto para estadísticas en logo Ministerio de Cultura */}
+      {/* Login oculto en logo Ministerio de Cultura */}
       <StatsLoginModal
         isOpen={isStatsLoginOpen}
         onClose={() => setIsStatsLoginOpen(false)}
         onSuccess={() => {
           setIsStatsLoginOpen(false);
-          setIsStatsOpen(true);
+          setIsAdminPanelOpen(true);
         }}
         language={language}
       />
 
-      {/* Modal adaptativo para enlaces y estadísticas */}
+      {/* Panel Administrativo: Gestión de Eventos y Estadísticas */}
+      <AdminPanelModal
+        isOpen={isAdminPanelOpen}
+        onClose={() => setIsAdminPanelOpen(false)}
+        language={language}
+        deviceInfo={deviceInfo}
+        stats={stats}
+        statsLabels={t.modal}
+        events={events}
+        onAddEvent={addEvent}
+        onDeleteEvent={deleteEvent}
+      />
+
+      {/* Modal adaptativo para enlaces */}
       <ReportModal
         activeLink={selectedLink}
         deviceInfo={deviceInfo}
@@ -216,10 +235,7 @@ export function App() {
         language={language}
         stats={stats}
         t={t.modal}
-        onClose={() => {
-          setSelectedLinkId(null);
-          setIsStatsOpen(false);
-        }}
+        onClose={() => setSelectedLinkId(null)}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Home, Info, Languages, Network, Search } from 'lucide-react';
+import { CalendarDays, Home, Info, Languages, Network, Search } from 'lucide-react';
 import { Language, TranslationBundle } from '../i18n/translations';
 
 interface CintilloHeaderProps {
@@ -7,6 +7,7 @@ interface CintilloHeaderProps {
   onOpenSearch: () => void;
   onOpenConocenos: () => void;
   onOpenOrganigrama: () => void;
+  onOpenEventos: () => void;
   onGoHome: () => void;
   t: TranslationBundle['header'];
 }
@@ -17,6 +18,7 @@ export function CintilloHeader({
   onOpenSearch,
   onOpenConocenos,
   onOpenOrganigrama,
+  onOpenEventos,
   onGoHome,
   t,
 }: CintilloHeaderProps) {
@@ -137,39 +139,58 @@ export function CintilloHeader({
               <Network className="w-3.5 h-3.5" />
               <span>{t.orgChart}</span>
             </button>
+
+            <button
+              type="button"
+              onClick={onOpenEventos}
+              title={t.events}
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#CBD5E1] hover:bg-[#B12722] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-xs transition-all"
+            >
+              <CalendarDays className="w-3.5 h-3.5" />
+              <span>{t.events}</span>
+            </button>
           </nav>
         </div>
 
-        {/* Fila 2 exclusiva para móvil (< md): Home, Conócenos y Organigrama */}
+        {/* Fila 2 exclusiva para móvil (< md): Home, Conócenos, Organigrama y Eventos */}
         <nav
           aria-label="Navegación móvil"
-          className="flex md:hidden items-center justify-center gap-1.5 pt-1.5 mt-1.5 border-t border-[#94A3B8]/40"
+          className="flex md:hidden items-center justify-center gap-1 pt-1.5 mt-1.5 border-t border-[#94A3B8]/40"
         >
           <button
             type="button"
             onClick={onGoHome}
-            className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl bg-[#153684] hover:bg-[#0F2761] active:scale-[0.98] text-white font-display font-semibold text-[11px] shadow-sm transition-all"
+            className="flex-1 inline-flex items-center justify-center gap-1 px-1.5 py-1.5 rounded-xl bg-[#153684] hover:bg-[#0F2761] active:scale-[0.98] text-white font-display font-semibold text-[10px] shadow-sm transition-all"
           >
-            <Home className="w-3.5 h-3.5 shrink-0" />
+            <Home className="w-3 h-3 shrink-0" />
             <span>{t.home}</span>
           </button>
 
           <button
             type="button"
             onClick={onOpenConocenos}
-            className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-[11px] transition-all"
+            className="flex-1 inline-flex items-center justify-center gap-1 px-1.5 py-1.5 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-[10px] transition-all"
           >
-            <Info className="w-3.5 h-3.5 shrink-0" />
+            <Info className="w-3 h-3 shrink-0" />
             <span className="truncate">{t.aboutUs}</span>
           </button>
 
           <button
             type="button"
             onClick={onOpenOrganigrama}
-            className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-[11px] transition-all"
+            className="flex-1 inline-flex items-center justify-center gap-1 px-1.5 py-1.5 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-[10px] transition-all"
           >
-            <Network className="w-3.5 h-3.5 shrink-0" />
+            <Network className="w-3 h-3 shrink-0" />
             <span className="truncate">{t.orgChart}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onOpenEventos}
+            className="flex-1 inline-flex items-center justify-center gap-1 px-1.5 py-1.5 rounded-xl bg-[#CBD5E1] hover:bg-[#B12722] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-[10px] transition-all"
+          >
+            <CalendarDays className="w-3 h-3 shrink-0" />
+            <span className="truncate">{t.events}</span>
           </button>
         </nav>
       </div>
