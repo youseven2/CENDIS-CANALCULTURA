@@ -29,31 +29,40 @@ export function CintilloHeader({
         <div className="flex-1 bg-[#C81D25]" />
       </div>
 
-      {/* Vista Móvil (< md): 2 filas limpias sin solapamiento */}
       <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-1.5 sm:py-2">
         <div className="flex items-center justify-between gap-2">
-          {/* LADO IZQUIERDO: Logo CENDIS + texto CENDIS */}
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              type="button"
-              onClick={onGoHome}
-              title={`CENDIS - ${t.home}`}
-              aria-label={`CENDIS - ${t.home}`}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/95 rounded-xl px-1.5 sm:px-2.5 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
-            >
-              <img
-                src="/logos/cendis.jpg"
-                alt="Centro Nacional del Disco - CENDIS"
-                className="h-5 sm:h-8 w-auto object-contain rounded"
-              />
-              <span className="font-display font-extrabold text-xs sm:text-sm text-[#B12722] tracking-wide uppercase">
-                CENDIS
-              </span>
-            </button>
-          </div>
+          {/* LADO IZQUIERDO: Ambos logos (sin nombres) + Buscar + Traducción ES/EN */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            <div className="flex items-center gap-1.5 bg-white/95 rounded-xl px-1.5 sm:px-2 py-1 border border-[#94A3B8]/70 shadow-sm">
+              <button
+                type="button"
+                onClick={onGoHome}
+                title={t.home}
+                aria-label={`CENDIS - ${t.home}`}
+                className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              >
+                <img
+                  src="/logos/cendis.jpg"
+                  alt="CENDIS"
+                  className="h-5 sm:h-7 w-auto object-contain rounded"
+                />
+              </button>
+              <div className="h-5 sm:h-6 w-px bg-[#94A3B8]" />
+              <button
+                type="button"
+                onClick={onGoHome}
+                title={t.home}
+                aria-label={`Canal Cultura - ${t.home}`}
+                className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              >
+                <img
+                  src="/logos/cultura-venezuela.jpg"
+                  alt="Canal Cultura"
+                  className="h-6 sm:h-8 w-auto object-contain rounded"
+                />
+              </button>
+            </div>
 
-          {/* CENTRO: en móvil solo Buscar + ES/EN; en md+ toda la barra */}
-          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={onOpenSearch}
@@ -93,65 +102,45 @@ export function CintilloHeader({
                 EN
               </button>
             </div>
-
-            {/* Navegación inline en tablet/desktop (md+) */}
-            <nav
-              aria-label="Navegación principal"
-              className="hidden md:flex items-center gap-1.5"
-            >
-              <button
-                type="button"
-                onClick={onGoHome}
-                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#153684] hover:bg-[#0F2761] active:scale-[0.98] text-white font-display font-semibold text-xs shadow-sm shadow-[#153684]/25 transition-all"
-              >
-                <Home className="w-3.5 h-3.5" />
-                <span>{t.home}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenConocenos}
-                title={t.aboutUs}
-                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-xs transition-all"
-              >
-                <Info className="w-3.5 h-3.5" />
-                <span>{t.aboutUs}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenOrganigrama}
-                title={t.orgChart}
-                className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-xs transition-all"
-              >
-                <Network className="w-3.5 h-3.5" />
-                <span>{t.orgChart}</span>
-              </button>
-            </nav>
           </div>
 
-          {/* LADO DERECHO: CANAL CULTURA a la izquierda de su logo */}
-          <div className="flex items-center shrink-0">
+          {/* LADO DERECHO (md+): Home, Conócenos, Organigrama */}
+          <nav
+            aria-label="Navegación principal"
+            className="hidden md:flex items-center gap-1.5 shrink-0"
+          >
             <button
               type="button"
               onClick={onGoHome}
-              title={`CANAL CULTURA - ${t.home}`}
-              aria-label={`CANAL CULTURA - ${t.home}`}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/95 rounded-xl px-1.5 sm:px-2.5 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#153684] hover:bg-[#0F2761] active:scale-[0.98] text-white font-display font-semibold text-xs shadow-sm shadow-[#153684]/25 transition-all"
             >
-              <span className="hidden sm:inline font-display font-extrabold text-xs sm:text-sm text-[#153684] tracking-wide uppercase whitespace-nowrap">
-                CANAL CULTURA
-              </span>
-              <img
-                src="/logos/cultura-venezuela.jpg"
-                alt="Canal Cultura Venezuela"
-                className="h-6 sm:h-8 w-auto object-contain rounded"
-              />
+              <Home className="w-3.5 h-3.5" />
+              <span>{t.home}</span>
             </button>
-          </div>
+
+            <button
+              type="button"
+              onClick={onOpenConocenos}
+              title={t.aboutUs}
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-xs transition-all"
+            >
+              <Info className="w-3.5 h-3.5" />
+              <span>{t.aboutUs}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={onOpenOrganigrama}
+              title={t.orgChart}
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 active:scale-[0.98] font-display font-semibold text-xs transition-all"
+            >
+              <Network className="w-3.5 h-3.5" />
+              <span>{t.orgChart}</span>
+            </button>
+          </nav>
         </div>
 
-        {/* Fila 2 exclusiva para móvil (< md): Home, Conócenos y Organigrama sin solaparse */}
+        {/* Fila 2 exclusiva para móvil (< md): Home, Conócenos y Organigrama */}
         <nav
           aria-label="Navegación móvil"
           className="flex md:hidden items-center justify-center gap-1.5 pt-1.5 mt-1.5 border-t border-[#94A3B8]/40"
