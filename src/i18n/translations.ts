@@ -35,6 +35,8 @@ export interface TranslationBundle {
   header: {
     ministryShort: string;
     home: string;
+    aboutUs: string;
+    orgChart: string;
     searchPlaceholder: string;
     searchButtonTitle: string;
     languageLabel: string;
@@ -100,6 +102,8 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
     header: {
       ministryShort: 'Ministerio del Poder Popular para la Cultura',
       home: 'Home',
+      aboutUs: 'Conócenos',
+      orgChart: 'Organigrama',
       searchPlaceholder: 'Buscar en la página...',
       searchButtonTitle: 'Buscar dentro de la página',
       languageLabel: 'Idioma',
@@ -294,6 +298,8 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
     header: {
       ministryShort: "Ministry of People's Power for Culture",
       home: 'Home',
+      aboutUs: 'About Us',
+      orgChart: 'Org Chart',
       searchPlaceholder: 'Search within page...',
       searchButtonTitle: 'Search within this page',
       languageLabel: 'Language',

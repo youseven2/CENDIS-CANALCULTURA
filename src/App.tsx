@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { CintilloHeader } from './components/CintilloHeader';
+import { ConocenosModal } from './components/ConocenosModal';
 import { FloatingSocials } from './components/FloatingSocials';
 import { FooterCintillo } from './components/FooterCintillo';
 import { HeroCarousel } from './components/HeroCarousel';
+import { OrganigramaModal } from './components/OrganigramaModal';
 import { QuickLinksPanel } from './components/QuickLinksPanel';
 import { ReportModal } from './components/ReportModal';
 import { SearchOverlay } from './components/SearchOverlay';
@@ -16,6 +18,8 @@ export function App() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isConocenosOpen, setIsConocenosOpen] = useState(false);
+  const [isOrganigramaOpen, setIsOrganigramaOpen] = useState(false);
 
   const t = TRANSLATIONS[language];
   const deviceLabel = t.header.deviceLabels[deviceInfo.device];
@@ -31,6 +35,8 @@ export function App() {
   const handleGoHome = () => {
     setSelectedLinkId(null);
     setIsSearchOpen(false);
+    setIsConocenosOpen(false);
+    setIsOrganigramaOpen(false);
     setActiveSlide(0);
   };
 
@@ -51,12 +57,14 @@ export function App() {
 
   return (
     <div className="h-dvh w-full overflow-hidden flex flex-col bg-gradient-to-br from-[#CBD5E1] via-[#DCE2EA] to-[#B8C4D4]">
-      {/* Cintillo Superior: Logos + Buscar + Idioma ES/EN + Solo Home */}
+      {/* Cintillo Superior: Logos (al tocar vuelven al Home) + Buscar + Idioma + Home + Conócenos + Organigrama */}
       <CintilloHeader
         deviceInfo={deviceInfo}
         language={language}
         onToggleLanguage={setLanguage}
         onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenConocenos={() => setIsConocenosOpen(true)}
+        onOpenOrganigrama={() => setIsOrganigramaOpen(true)}
         onGoHome={handleGoHome}
         t={t.header}
       />
@@ -107,6 +115,7 @@ export function App() {
         deviceInfo={deviceInfo}
         t={t.footer}
         deviceLabel={deviceLabel}
+        onGoHome={handleGoHome}
       />
 
       {/* Botones Flotantes de Redes Sociales: Instagram, Facebook, TikTok */}
@@ -123,6 +132,21 @@ export function App() {
         t={t}
         onSelectSlide={(idx) => setActiveSlide(idx)}
         onSelectLink={handleOpenLink}
+      />
+
+      {/* Modal Conócenos */}
+      <ConocenosModal
+        isOpen={isConocenosOpen}
+        onClose={() => setIsConocenosOpen(false)}
+        language={language}
+      />
+
+      {/* Modal Organigrama (Gráfico y Textual) */}
+      <OrganigramaModal
+        isOpen={isOrganigramaOpen}
+        onClose={() => setIsOrganigramaOpen(false)}
+        language={language}
+        device={deviceInfo.device}
       />
 
       {/* Modal adaptativo para enlaces y reportes */}
