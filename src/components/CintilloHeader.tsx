@@ -35,34 +35,34 @@ export function CintilloHeader({
       </div>
 
       <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2">
-        {/* Logos Institucionales clicables: devuelven al Home */}
+        {/* Logos Institucionales clicables: CENDIS a la izquierda y Canal Cultura a la derecha */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="flex items-center gap-1.5 sm:gap-2.5 bg-[#CBD5E1]/70 border border-[#94A3B8]/60 rounded-xl px-1.5 sm:px-2 py-1 shrink-0 shadow-inner">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-[#CBD5E1]/80 border border-[#94A3B8]/70 rounded-xl px-1.5 sm:px-2 py-1 shrink-0 shadow-inner">
             <button
               type="button"
               onClick={onGoHome}
-              title={t.home}
+              title={`CENDIS - ${t.home}`}
               aria-label={`CENDIS - ${t.home}`}
-              className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              className="bg-white/95 rounded-lg px-1.5 py-0.5 border border-[#94A3B8]/50 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
             >
               <img
                 src="/logos/cendis.jpg"
                 alt="Centro Nacional del Disco - CENDIS"
-                className="h-5 sm:h-8 w-auto object-contain rounded-md"
+                className="h-5 sm:h-7 w-auto object-contain rounded"
               />
             </button>
-            <div className="h-5 sm:h-6 w-px bg-[#94A3B8]" />
+            <div className="h-5 sm:h-6 w-px bg-[#64748B]/60" />
             <button
               type="button"
               onClick={onGoHome}
-              title={t.home}
+              title={`Canal Cultura - ${t.home}`}
               aria-label={`Canal Cultura - ${t.home}`}
-              className="focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              className="bg-white/95 rounded-lg px-1.5 py-0.5 border border-[#94A3B8]/50 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
             >
               <img
                 src="/logos/cultura-venezuela.jpg"
                 alt="Canal Cultura Venezuela"
-                className="h-6 sm:h-9 w-auto object-contain rounded-md"
+                className="h-6 sm:h-8 w-auto object-contain rounded"
               />
             </button>
           </div>
