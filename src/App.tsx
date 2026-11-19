@@ -61,7 +61,6 @@ export function App() {
     <div className="h-dvh w-full overflow-hidden flex flex-col bg-gradient-to-br from-[#CBD5E1] via-[#DCE2EA] to-[#B8C4D4]">
       {/* Cintillo Superior: Logos (al tocar vuelven al Home) + Buscar + Idioma + Home + Conócenos + Organigrama */}
       <CintilloHeader
-        deviceInfo={deviceInfo}
         language={language}
         onToggleLanguage={setLanguage}
         onOpenSearch={() => setIsSearchOpen(true)}

@@ -1,9 +1,7 @@
 import { Home, Info, Languages, Network, Search } from 'lucide-react';
-import { DeviceInfo } from '../hooks/useDeviceType';
 import { Language, TranslationBundle } from '../i18n/translations';
 
 interface CintilloHeaderProps {
-  deviceInfo: DeviceInfo;
   language: Language;
   onToggleLanguage: (lang: Language) => void;
   onOpenSearch: () => void;
@@ -14,7 +12,6 @@ interface CintilloHeaderProps {
 }
 
 export function CintilloHeader({
-  deviceInfo,
   language,
   onToggleLanguage,
   onOpenSearch,
@@ -23,8 +20,6 @@ export function CintilloHeader({
   onGoHome,
   t,
 }: CintilloHeaderProps) {
-  const { device } = deviceInfo;
-
   return (
     <header className="w-full shrink-0 bg-gradient-to-r from-[#DCE2EA] via-[#E8ECF2] to-[#DCE2EA] border-b border-[#94A3B8]/50 shadow-sm z-30">
       {/* Cintillo metálico superior con acento tricolor */}
@@ -37,36 +32,24 @@ export function CintilloHeader({
       {/* Vista Móvil (< md): 2 filas limpias sin solapamiento */}
       <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-1.5 sm:py-2">
         <div className="flex items-center justify-between gap-2">
-          {/* LADO IZQUIERDO: Logo CENDIS */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* LADO IZQUIERDO: Logo CENDIS + texto CENDIS */}
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={onGoHome}
               title={`CENDIS - ${t.home}`}
               aria-label={`CENDIS - ${t.home}`}
-              className="bg-white/95 rounded-xl px-1.5 sm:px-2 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/95 rounded-xl px-1.5 sm:px-2.5 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
             >
               <img
                 src="/logos/cendis.jpg"
                 alt="Centro Nacional del Disco - CENDIS"
                 className="h-5 sm:h-8 w-auto object-contain rounded"
               />
+              <span className="font-display font-extrabold text-xs sm:text-sm text-[#B12722] tracking-wide uppercase">
+                CENDIS
+              </span>
             </button>
-
-            {device === 'desktop' && (
-              <button
-                type="button"
-                onClick={onGoHome}
-                className="hidden xl:flex flex-col leading-tight text-left hover:opacity-80 transition-opacity"
-              >
-                <span className="font-display font-bold text-sm text-[#0F172A] tracking-tight">
-                  CENDIS · Canal Cultura
-                </span>
-                <span className="text-[11px] font-medium text-[#334155] truncate max-w-[200px]">
-                  {t.ministryShort}
-                </span>
-              </button>
-            )}
           </div>
 
           {/* CENTRO: en móvil solo Buscar + ES/EN; en md+ toda la barra */}
@@ -147,19 +130,22 @@ export function CintilloHeader({
             </nav>
           </div>
 
-          {/* LADO DERECHO: Logo Canal Cultura */}
+          {/* LADO DERECHO: CANAL CULTURA a la izquierda de su logo */}
           <div className="flex items-center shrink-0">
             <button
               type="button"
               onClick={onGoHome}
-              title={`Canal Cultura - ${t.home}`}
-              aria-label={`Canal Cultura - ${t.home}`}
-              className="bg-white/95 rounded-xl px-1.5 sm:px-2 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+              title={`CANAL CULTURA - ${t.home}`}
+              aria-label={`CANAL CULTURA - ${t.home}`}
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/95 rounded-xl px-1.5 sm:px-2.5 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
             >
+              <span className="hidden sm:inline font-display font-extrabold text-xs sm:text-sm text-[#153684] tracking-wide uppercase whitespace-nowrap">
+                CANAL CULTURA
+              </span>
               <img
                 src="/logos/cultura-venezuela.jpg"
                 alt="Canal Cultura Venezuela"
-                className="h-6 sm:h-9 w-auto object-contain rounded"
+                className="h-6 sm:h-8 w-auto object-contain rounded"
               />
             </button>
           </div>
