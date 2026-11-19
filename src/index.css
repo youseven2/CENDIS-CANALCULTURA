@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Custom subtle scrollbars only inside modals/reports when needed */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(21, 54, 132, 0.25);
+  border-radius: 9999px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 29, 37, 0.45);
+}
