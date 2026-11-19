@@ -2,12 +2,16 @@ import { useState } from 'react';
 import {
   BarChart3,
   CalendarPlus,
+  Edit3,
   FileDown,
+  Image as ImageIcon,
   Lock,
+  RotateCcw,
   Trash2,
   Upload,
   X,
 } from 'lucide-react';
+import { ManagedSlide } from '../hooks/useCarouselStore';
 import { CulturalEvent } from '../hooks/useEventsStore';
 import { DeviceInfo } from '../hooks/useDeviceType';
 import { PortalStatsState, formatDuration } from '../hooks/usePortalStats';
@@ -24,6 +28,11 @@ interface AdminPanelModalProps {
   events: CulturalEvent[];
   onAddEvent: (evt: Omit<CulturalEvent, 'id' | 'createdAt'>) => void;
   onDeleteEvent: (id: string) => void;
+  slides: ManagedSlide[];
+  onAddSlide: (slide: Omit<ManagedSlide, 'id'>) => void;
+  onUpdateSlide: (id: string, slide: Omit<ManagedSlide, 'id'>) => void;
+  onDeleteSlide: (id: string) => void;
+  onResetSlides: () => void;
 }
 
 export function AdminPanelModal({
@@ -35,8 +44,15 @@ export function AdminPanelModal({
   events,
   onAddEvent,
   onDeleteEvent,
+  slides,
+  onAddSlide,
+  onUpdateSlide,
+  onDeleteSlide,
+  onResetSlides,
 }: AdminPanelModalProps) {
-  const [activeTab, setActiveTab] = useState<'events' | 'stats'>('events');
+  const [activeTab, setActiveTab] = useState<'events' | 'carousel' | 'stats'>('carousel');
+
+  // Eventos form state
   const [entity, setEntity] = useState<CulturalEvent['entity']>('CENDIS');
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
@@ -48,6 +64,18 @@ export function AdminPanelModal({
   const [attachmentType, setAttachmentType] = useState<'image' | 'pdf' | undefined>();
   const [attachmentDataUrl, setAttachmentDataUrl] = useState<string | undefined>();
   const [savedMsg, setSavedMsg] = useState('');
+
+  // Carrusel form state
+  const [editingSlideId, setEditingSlideId] = useState<string | null>(null);
+  const [slideBadge, setSlideBadge] = useState('Noticia Cultural');
+  const [slideTitle, setSlideTitle] = useState('');
+  const [slideSubtitle, setSlideSubtitle] = useState('');
+  const [slideTag, setSlideTag] = useState('CENDIS · Canal Cultura');
+  const [slideAccent, setSlideAccent] = useState<ManagedSlide['accentColor']>('blue');
+  const [slideActionLabel, setSlideActionLabel] = useState('Ver Más');
+  const [slideTargetLinkId, setSlideTargetLinkId] = useState('canal-envivo');
+  const [slideImageDataUrl, setSlideImageDataUrl] = useState<string | undefined>();
+  const [slideSavedMsg, setSlideSavedMsg] = useState('');
 
   if (!isOpen) return null;
 
@@ -73,7 +101,65 @@ export function AdminPanelModal({
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSlideImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setSlideImageDataUrl(typeof reader.result === 'string' ? reader.result : undefined);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const resetSlideForm = () => {
+    setEditingSlideId(null);
+    setSlideBadge('Noticia Cultural');
+    setSlideTitle('');
+    setSlideSubtitle('');
+    setSlideTag('CENDIS · Canal Cultura');
+    setSlideAccent('blue');
+    setSlideActionLabel('Ver Más');
+    setSlideTargetLinkId('canal-envivo');
+    setSlideImageDataUrl(undefined);
+  };
+
+  const handleEditSlide = (slide: ManagedSlide) => {
+    setEditingSlideId(slide.id);
+    setSlideBadge(slide.badge);
+    setSlideTitle(slide.title);
+    setSlideSubtitle(slide.subtitle);
+    setSlideTag(slide.tag);
+    setSlideAccent(slide.accentColor);
+    setSlideActionLabel(slide.actionLabel);
+    setSlideTargetLinkId(slide.targetLinkId);
+    setSlideImageDataUrl(slide.imageDataUrl);
+  };
+
+  const handleSlideSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const payload: Omit<ManagedSlide, 'id'> = {
+      badge: slideBadge.trim() || 'Noticia Cultural',
+      title: slideTitle.trim(),
+      subtitle: slideSubtitle.trim(),
+      tag: slideTag.trim() || 'CENDIS · Canal Cultura',
+      accentColor: slideAccent,
+      actionLabel: slideActionLabel.trim() || 'Ver Más',
+      targetLinkId: slideTargetLinkId,
+      imageDataUrl: slideImageDataUrl,
+    };
+
+    if (editingSlideId) {
+      onUpdateSlide(editingSlideId, payload);
+      setSlideSavedMsg(isEs ? 'Diapositiva actualizada.' : 'Slide updated.');
+    } else {
+      onAddSlide(payload);
+      setSlideSavedMsg(isEs ? 'Noticia agregada al carrusel.' : 'Slide added to carousel.');
+    }
+    resetSlideForm();
+    window.setTimeout(() => setSlideSavedMsg(''), 3000);
+  };
+
+  const handleSubmitEvent = (e: React.FormEvent) => {
     e.preventDefault();
     onAddEvent({
       entity,
@@ -128,17 +214,31 @@ export function AdminPanelModal({
                   : 'Admin Panel · Ministry of Culture'}
               </h3>
               <p className="text-[11px] text-[#334155] truncate">
-                {isEs ? 'Gestión de Eventos y Estadísticas' : 'Events & Statistics Management'}
+                {isEs
+                  ? 'Gestión de Carrusel, Eventos y Estadísticas'
+                  : 'Carousel, Events & Statistics Management'}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between sm:justify-end gap-2">
+          <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2">
             <div className="inline-flex rounded-xl bg-[#E2E8F0] p-0.5 border border-[#94A3B8]/70">
               <button
                 type="button"
+                onClick={() => setActiveTab('carousel')}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-display font-bold transition-all ${
+                  activeTab === 'carousel'
+                    ? 'bg-[#153684] text-white shadow-sm'
+                    : 'text-[#334155] hover:text-[#0F172A]'
+                }`}
+              >
+                <ImageIcon className="w-3.5 h-3.5" />
+                <span>{isEs ? 'Carrusel' : 'Carousel'}</span>
+              </button>
+              <button
+                type="button"
                 onClick={() => setActiveTab('events')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-display font-bold transition-all ${
                   activeTab === 'events'
                     ? 'bg-[#153684] text-white shadow-sm'
                     : 'text-[#334155] hover:text-[#0F172A]'
@@ -150,7 +250,7 @@ export function AdminPanelModal({
               <button
                 type="button"
                 onClick={() => setActiveTab('stats')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-display font-bold transition-all ${
                   activeTab === 'stats'
                     ? 'bg-[#153684] text-white shadow-sm'
                     : 'text-[#334155] hover:text-[#0F172A]'
@@ -185,11 +285,261 @@ export function AdminPanelModal({
 
         {/* Contenido */}
         <div className="p-4 sm:p-6 overflow-y-auto custom-scroll flex-1">
-          {activeTab === 'events' ? (
+          {activeTab === 'carousel' ? (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              {/* Formulario de Noticia / Imagen del Carrusel */}
+              <form
+                onSubmit={handleSlideSubmit}
+                className="lg:col-span-6 rounded-2xl bg-[#F1F5F9]/90 border border-[#94A3B8]/60 p-4 space-y-3 shadow-sm"
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="font-display font-bold text-sm sm:text-base text-[#153684]">
+                    {editingSlideId
+                      ? isEs
+                        ? 'Modificar Noticia del Carrusel'
+                        : 'Edit Carousel Slide'
+                      : isEs
+                        ? 'Agregar Noticia / Imagen al Carrusel'
+                        : 'Add News / Image to Carousel'}
+                  </h4>
+                  {editingSlideId && (
+                    <button
+                      type="button"
+                      onClick={resetSlideForm}
+                      className="text-xs font-bold text-[#B12722] hover:underline"
+                    >
+                      {isEs ? 'Cancelar edición' : 'Cancel'}
+                    </button>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                    {isEs ? 'Título de la Noticia' : 'News Title'}
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={slideTitle}
+                    onChange={(e) => setSlideTitle(e.target.value)}
+                    placeholder={isEs ? 'Ej. Gran Festival Cultural...' : 'E.g. Cultural Festival...'}
+                    className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs sm:text-sm text-[#0F172A] focus:outline-none focus:border-[#153684]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                    {isEs ? 'Descripción / Resumen' : 'Description / Summary'}
+                  </label>
+                  <textarea
+                    rows={2}
+                    required
+                    value={slideSubtitle}
+                    onChange={(e) => setSlideSubtitle(e.target.value)}
+                    placeholder={isEs ? 'Texto breve de la noticia...' : 'Brief news summary...'}
+                    className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs sm:text-sm text-[#0F172A] focus:outline-none focus:border-[#153684]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                      {isEs ? 'Etiqueta Superior' : 'Badge'}
+                    </label>
+                    <input
+                      type="text"
+                      value={slideBadge}
+                      onChange={(e) => setSlideBadge(e.target.value)}
+                      className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:border-[#153684]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                      {isEs ? 'Color de Fondo' : 'Theme Color'}
+                    </label>
+                    <select
+                      value={slideAccent}
+                      onChange={(e) =>
+                        setSlideAccent(e.target.value as ManagedSlide['accentColor'])
+                      }
+                      className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:border-[#153684]"
+                    >
+                      <option value="blue">{isEs ? 'Azul Institucional' : 'Institutional Blue'}</option>
+                      <option value="red">{isEs ? 'Pizarra / Azul' : 'Slate / Blue'}</option>
+                      <option value="yellow">{isEs ? 'Plateado Claro' : 'Light Silver'}</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                      {isEs ? 'Texto del Botón' : 'Button Label'}
+                    </label>
+                    <input
+                      type="text"
+                      value={slideActionLabel}
+                      onChange={(e) => setSlideActionLabel(e.target.value)}
+                      className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:border-[#153684]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                      {isEs ? 'Enlace Destino' : 'Target Shortcut'}
+                    </label>
+                    <select
+                      value={slideTargetLinkId}
+                      onChange={(e) => setSlideTargetLinkId(e.target.value)}
+                      className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:border-[#153684]"
+                    >
+                      <option value="canal-envivo">Señal en Vivo</option>
+                      <option value="cendis-catalogo">Catálogo</option>
+                      <option value="conciertos">Conciertos</option>
+                      <option value="podcast">Podcast</option>
+                      <option value="noticias">Noticias</option>
+                      <option value="canal-programacion">Parrilla</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-[#334155] mb-1">
+                    {isEs ? 'Imagen o Foto del Carrusel (Opcional)' : 'Carousel Photo (Optional)'}
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <label className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-dashed border-[#94A3B8] cursor-pointer hover:border-[#153684] text-xs text-[#334155]">
+                      <Upload className="w-4 h-4 text-[#153684] shrink-0" />
+                      <span className="truncate">
+                        {slideImageDataUrl
+                          ? isEs
+                            ? 'Foto cargada (clic para cambiar)'
+                            : 'Photo loaded (click to change)'
+                          : isEs
+                            ? 'Subir JPG o PNG...'
+                            : 'Upload JPG or PNG...'}
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleSlideImageChange}
+                        className="hidden"
+                      />
+                    </label>
+                    {slideImageDataUrl && (
+                      <button
+                        type="button"
+                        onClick={() => setSlideImageDataUrl(undefined)}
+                        className="px-2.5 py-2 rounded-xl bg-[#B12722]/10 text-[#B12722] text-xs font-bold"
+                      >
+                        {isEs ? 'Quitar' : 'Clear'}
+                      </button>
+                    )}
+                  </div>
+                  {slideImageDataUrl && (
+                    <img
+                      src={slideImageDataUrl}
+                      alt="Vista previa"
+                      className="mt-2 h-24 w-full object-cover rounded-xl border border-[#94A3B8]/60"
+                    />
+                  )}
+                </div>
+
+                {slideSavedMsg && (
+                  <p className="text-xs font-bold text-[#0F766E] bg-[#0F766E]/10 px-3 py-2 rounded-xl">
+                    {slideSavedMsg}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#153684] hover:bg-[#0F2761] text-white font-display font-bold text-xs sm:text-sm shadow-md transition-all"
+                >
+                  {editingSlideId
+                    ? isEs
+                      ? 'Actualizar Diapositiva'
+                      : 'Update Slide'
+                    : isEs
+                      ? 'Agregar al Carrusel'
+                      : 'Add to Carousel'}
+                </button>
+              </form>
+
+              {/* Lista de Diapositivas Predeterminadas y Personalizadas */}
+              <div className="lg:col-span-6 rounded-2xl bg-[#F1F5F9]/90 border border-[#94A3B8]/60 p-4 space-y-2.5 shadow-sm">
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className="font-display font-bold text-sm sm:text-base text-[#0F172A]">
+                    {isEs
+                      ? `Diapositivas Activas (${slides.length})`
+                      : `Active Slides (${slides.length})`}
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      resetSlideForm();
+                      onResetSlides();
+                    }}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#153684] hover:underline"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>{isEs ? 'Restaurar' : 'Reset'}</span>
+                  </button>
+                </div>
+
+                {slides.length === 0 ? (
+                  <p className="text-xs text-[#64748B] py-8 text-center">
+                    {isEs
+                      ? 'No hay diapositivas activas en el carrusel.'
+                      : 'No active slides in the carousel.'}
+                  </p>
+                ) : (
+                  <div className="space-y-2 max-h-[50dvh] overflow-y-auto custom-scroll pr-1">
+                    {slides.map((s, idx) => (
+                      <div
+                        key={s.id}
+                        className="p-2.5 rounded-xl bg-white border border-[#94A3B8]/50 flex items-center justify-between gap-2.5"
+                      >
+                        {s.imageDataUrl && (
+                          <img
+                            src={s.imageDataUrl}
+                            alt={s.title}
+                            className="w-12 h-12 rounded-lg object-cover shrink-0 border border-gray-200"
+                          />
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <span className="text-[10px] font-bold text-[#153684] uppercase">
+                            #{idx + 1} · {s.badge}
+                          </span>
+                          <p className="font-display font-bold text-xs text-[#0F172A] truncate">
+                            {s.title}
+                          </p>
+                          <p className="text-[10px] text-[#475569] truncate">{s.subtitle}</p>
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => handleEditSlide(s)}
+                            title={isEs ? 'Modificar' : 'Edit'}
+                            className="p-1.5 rounded-lg text-[#153684] hover:bg-[#153684]/10"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => onDeleteSlide(s.id)}
+                            title={isEs ? 'Eliminar' : 'Delete'}
+                            className="p-1.5 rounded-lg text-[#B12722] hover:bg-[#B12722]/10"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : activeTab === 'events' ? (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
               {/* Formulario de Nuevo Evento */}
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmitEvent}
                 className="lg:col-span-7 rounded-2xl bg-[#F1F5F9]/90 border border-[#94A3B8]/60 p-4 space-y-3 shadow-sm"
               >
                 <h4 className="font-display font-bold text-sm sm:text-base text-[#153684]">
@@ -308,7 +658,10 @@ export function AdminPanelModal({
                   <label className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-dashed border-[#94A3B8] cursor-pointer hover:border-[#153684] text-xs text-[#334155]">
                     <Upload className="w-4 h-4 text-[#153684] shrink-0" />
                     <span className="truncate">
-                      {attachmentName || (isEs ? 'Seleccionar JPG, PNG o PDF...' : 'Choose JPG, PNG, or PDF...')}
+                      {attachmentName ||
+                        (isEs
+                          ? 'Seleccionar JPG, PNG o PDF...'
+                          : 'Choose JPG, PNG, or PDF...')}
                     </span>
                     <input
                       type="file"
@@ -336,14 +689,14 @@ export function AdminPanelModal({
               {/* Lista de Eventos Registrados */}
               <div className="lg:col-span-5 rounded-2xl bg-[#F1F5F9]/90 border border-[#94A3B8]/60 p-4 space-y-2.5 shadow-sm">
                 <h4 className="font-display font-bold text-sm sm:text-base text-[#0F172A]">
-                  {isEs ? `Eventos Programados (${events.length})` : `Scheduled Events (${events.length})`}
+                  {isEs
+                    ? `Eventos Programados (${events.length})`
+                    : `Scheduled Events (${events.length})`}
                 </h4>
 
                 {events.length === 0 ? (
                   <p className="text-xs text-[#64748B] py-6 text-center">
-                    {isEs
-                      ? 'Aún no hay eventos registrados.'
-                      : 'No events registered yet.'}
+                    {isEs ? 'Aún no hay eventos registrados.' : 'No events registered yet.'}
                   </p>
                 ) : (
                   <div className="space-y-2 max-h-[46dvh] overflow-y-auto custom-scroll pr-1">
@@ -424,8 +777,12 @@ export function AdminPanelModal({
                   {stats.countries.map((c) => (
                     <div key={c.code} className="space-y-1">
                       <div className="flex justify-between text-xs font-semibold">
-                        <span>{isEs ? c.countryEs : c.countryEn} ({c.code})</span>
-                        <span>{c.visits.toLocaleString()} · {c.percent}%</span>
+                        <span>
+                          {isEs ? c.countryEs : c.countryEn} ({c.code})
+                        </span>
+                        <span>
+                          {c.visits.toLocaleString()} · {c.percent}%
+                        </span>
                       </div>
                       <div className="h-2 rounded-full bg-[#CBD5E1] overflow-hidden">
                         <div
