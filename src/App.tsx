@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { AliadosModal } from './components/AliadosModal';
+import { AliadosStrip, AllyItem } from './components/AliadosStrip';
 import { CintilloHeader } from './components/CintilloHeader';
 import { ConocenosModal } from './components/ConocenosModal';
 import { FloatingSocials } from './components/FloatingSocials';
@@ -26,6 +28,7 @@ export function App() {
   const [isSocialsOpen, setIsSocialsOpen] = useState(false);
   const [isStatsLoginOpen, setIsStatsLoginOpen] = useState(false);
   const [isStatsOpen, setIsStatsOpen] = useState(false);
+  const [selectedAlly, setSelectedAlly] = useState<AllyItem | null>(null);
 
   const t = TRANSLATIONS[language];
   const deviceLabel = t.header.deviceLabels[deviceInfo.device];
@@ -58,6 +61,7 @@ export function App() {
     setIsSocialsOpen(false);
     setIsStatsLoginOpen(false);
     setIsStatsOpen(false);
+    setSelectedAlly(null);
     setActiveSlide(0);
   };
 
@@ -97,14 +101,14 @@ export function App() {
       />
 
       {/* Área Principal Sin Deslizamiento */}
-      <main className="flex-1 min-h-0 w-full max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-2.5 sm:py-4">
+      <main className="flex-1 min-h-0 w-full max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-2 sm:py-3 flex flex-col gap-2 sm:gap-3">
         <div
-          className={`h-full w-full grid gap-2.5 sm:gap-4 ${
+          className={`flex-1 min-h-0 w-full grid gap-2 sm:gap-4 ${
             deviceInfo.device === 'desktop'
               ? 'grid-cols-12 grid-rows-1'
               : deviceInfo.device === 'tablet'
                 ? 'grid-cols-1 grid-rows-[1.05fr_1fr]'
-                : 'grid-cols-1 grid-rows-[0.95fr_1.15fr]'
+                : 'grid-cols-1 grid-rows-[0.9fr_1.1fr]'
           }`}
         >
           {/* Carrusel Principal */}
@@ -135,6 +139,9 @@ export function App() {
             />
           </div>
         </div>
+
+        {/* Segmento de Aliados del CENDIS (Entes del Ministerio de Cultura) */}
+        <AliadosStrip language={language} onSelectAlly={setSelectedAlly} />
       </main>
 
       {/* Cintillo de Pie de Página: Ministerio del Poder Popular para la Cultura */}
@@ -181,6 +188,13 @@ export function App() {
         onClose={() => setIsOrganigramaOpen(false)}
         language={language}
         device={deviceInfo.device}
+      />
+
+      {/* Modal Aliados del CENDIS */}
+      <AliadosModal
+        selectedAlly={selectedAlly}
+        onClose={() => setSelectedAlly(null)}
+        language={language}
       />
 
       {/* Login oculto para estadísticas en logo Ministerio de Cultura */}
