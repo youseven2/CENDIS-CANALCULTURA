@@ -23,28 +23,28 @@ const ACCENT_STYLES: Record<
   }
 > = {
   red: {
-    bg: 'from-[#B12722] via-[#C81D25] to-[#8E161B]',
-    badgeBg: 'bg-[#F9C80E]',
-    badgeText: 'text-[#111827]',
-    buttonBg: 'bg-white text-[#B12722] hover:bg-[#F9C80E] hover:text-[#111827]',
-    decorCircle1: 'bg-[#F9C80E]/20',
-    decorCircle2: 'bg-[#153684]/35',
+    bg: 'from-[#334155] via-[#475569] to-[#1E293B]',
+    badgeBg: 'bg-[#CBD5E1]',
+    badgeText: 'text-[#0F172A]',
+    buttonBg: 'bg-[#E2E8F0] text-[#0F172A] hover:bg-[#F9C80E] hover:text-[#0F172A]',
+    decorCircle1: 'bg-[#CBD5E1]/20',
+    decorCircle2: 'bg-[#153684]/40',
   },
   blue: {
-    bg: 'from-[#102966] via-[#153684] to-[#0D2152]',
-    badgeBg: 'bg-[#F9C80E]',
-    badgeText: 'text-[#111827]',
-    buttonBg: 'bg-[#F9C80E] text-[#111827] hover:bg-white hover:text-[#153684]',
-    decorCircle1: 'bg-[#F9C80E]/20',
-    decorCircle2: 'bg-[#C81D25]/35',
+    bg: 'from-[#0F2761] via-[#153684] to-[#1E293B]',
+    badgeBg: 'bg-[#CBD5E1]',
+    badgeText: 'text-[#0F172A]',
+    buttonBg: 'bg-[#CBD5E1] text-[#0F172A] hover:bg-[#F9C80E] hover:text-[#0F172A]',
+    decorCircle1: 'bg-[#94A3B8]/25',
+    decorCircle2: 'bg-[#CBD5E1]/15',
   },
   yellow: {
-    bg: 'from-[#E5B300] via-[#F9C80E] to-[#D9A300]',
+    bg: 'from-[#CBD5E1] via-[#E2E8F0] to-[#94A3B8]',
     badgeBg: 'bg-[#153684]',
     badgeText: 'text-white',
-    buttonBg: 'bg-[#153684] text-white hover:bg-[#C81D25]',
-    decorCircle1: 'bg-[#C81D25]/15',
-    decorCircle2: 'bg-[#153684]/15',
+    buttonBg: 'bg-[#153684] text-white hover:bg-[#334155]',
+    decorCircle1: 'bg-[#153684]/15',
+    decorCircle2: 'bg-[#F9C80E]/25',
   },
 };
 
@@ -100,7 +100,7 @@ export function HeroCarousel({
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className={`relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br ${style.bg} shadow-lg transition-all duration-500 flex flex-col justify-between p-4 sm:p-6 lg:p-8`}
+      className={`relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br ${style.bg} border border-[#94A3B8]/50 shadow-lg transition-all duration-500 flex flex-col justify-between p-4 sm:p-6 lg:p-8`}
     >
       <div
         className={`pointer-events-none absolute -right-12 -top-12 w-44 h-44 sm:w-64 sm:h-64 rounded-full blur-2xl ${style.decorCircle1} transition-colors duration-500`}
@@ -109,11 +109,11 @@ export function HeroCarousel({
         className={`pointer-events-none absolute -left-10 -bottom-12 w-40 h-40 sm:w-56 sm:h-56 rounded-full blur-2xl ${style.decorCircle2} transition-colors duration-500`}
       />
 
-      {/* Motivo gráfico institucional */}
-      <div className="pointer-events-none absolute right-4 top-4 sm:right-6 sm:top-6 flex items-center gap-1.5 opacity-85">
-        <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#F9C80E] shadow-sm" />
+      {/* Motivo gráfico metálico/institucional */}
+      <div className="pointer-events-none absolute right-4 top-4 sm:right-6 sm:top-6 flex items-center gap-1.5 opacity-90">
+        <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#CBD5E1] shadow-sm" />
         <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#153684] shadow-sm" />
-        <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#C81D25] border border-white/40 shadow-sm" />
+        <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#F9C80E] shadow-sm" />
       </div>
 
       {/* Badge superior */}
@@ -134,7 +134,7 @@ export function HeroCarousel({
       <div className="relative z-10 my-auto py-2 sm:py-4 max-w-2xl">
         <p
           className={`text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-1.5 ${
-            isLightBg ? 'text-[#111827]/75' : 'text-white/80'
+            isLightBg ? 'text-[#334155]' : 'text-[#CBD5E1]'
           }`}
         >
           {currentSlide.tag}
@@ -146,14 +146,14 @@ export function HeroCarousel({
               : device === 'tablet'
                 ? 'text-2xl sm:text-3xl'
                 : 'text-3xl lg:text-4xl'
-          } ${isLightBg ? 'text-[#111827]' : 'text-white'}`}
+          } ${isLightBg ? 'text-[#0F172A]' : 'text-white'}`}
         >
           {currentSlide.title}
         </h1>
         <p
           className={`mt-2 sm:mt-3 leading-relaxed ${
             device === 'mobile' ? 'text-xs line-clamp-2' : 'text-sm sm:text-base'
-          } ${isLightBg ? 'text-[#111827]/85' : 'text-white/90'}`}
+          } ${isLightBg ? 'text-[#1E293B]' : 'text-[#E2E8F0]'}`}
         >
           {currentSlide.subtitle}
         </p>
@@ -171,7 +171,7 @@ export function HeroCarousel({
       </div>
 
       {/* Controles del carrusel */}
-      <div className="relative z-10 flex items-center justify-between gap-3 pt-2 border-t border-white/15">
+      <div className="relative z-10 flex items-center justify-between gap-3 pt-2 border-t border-[#94A3B8]/25">
         <div className="flex items-center gap-1.5 sm:gap-2" role="tablist">
           {slides.map((slide, idx) => {
             const active = idx === activeIndex;
@@ -187,10 +187,10 @@ export function HeroCarousel({
                   active
                     ? isLightBg
                       ? 'w-7 bg-[#153684]'
-                      : 'w-7 bg-[#F9C80E]'
+                      : 'w-7 bg-[#CBD5E1]'
                     : isLightBg
-                      ? 'w-2 bg-[#111827]/25 hover:bg-[#111827]/50'
-                      : 'w-2 bg-white/40 hover:bg-white/70'
+                      ? 'w-2 bg-[#475569]/35 hover:bg-[#475569]/60'
+                      : 'w-2 bg-white/35 hover:bg-white/65'
                 }`}
               />
             );
@@ -204,7 +204,7 @@ export function HeroCarousel({
             aria-label={t.prevSlide}
             className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
               isLightBg
-                ? 'bg-[#111827]/10 hover:bg-[#111827]/20 text-[#111827]'
+                ? 'bg-[#334155]/15 hover:bg-[#334155]/25 text-[#0F172A]'
                 : 'bg-white/15 hover:bg-white/25 text-white'
             }`}
           >
@@ -216,7 +216,7 @@ export function HeroCarousel({
             aria-label={t.nextSlide}
             className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
               isLightBg
-                ? 'bg-[#111827]/10 hover:bg-[#111827]/20 text-[#111827]'
+                ? 'bg-[#334155]/15 hover:bg-[#334155]/25 text-[#0F172A]'
                 : 'bg-white/15 hover:bg-white/25 text-white'
             }`}
           >

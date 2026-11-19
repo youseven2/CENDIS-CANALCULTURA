@@ -41,11 +41,11 @@ export function ReportModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-4xl max-h-[90dvh] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col"
+        className="w-full max-w-4xl max-h-[90dvh] bg-[#E2E8F0] rounded-2xl sm:rounded-3xl shadow-2xl border border-[#94A3B8]/70 overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabecera del Modal */}
-        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-200 bg-[#F8F9FB]">
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#94A3B8]/50 bg-[#CBD5E1]/80">
           <div className="flex items-center gap-3 min-w-0">
             <span
               className="w-3 h-8 rounded-full shrink-0"
@@ -54,11 +54,11 @@ export function ReportModal({
             <div className="min-w-0">
               <h3
                 id="modal-title"
-                className="font-display font-bold text-base sm:text-lg text-[#111827] truncate"
+                className="font-display font-bold text-base sm:text-lg text-[#0F172A] truncate"
               >
                 {activeLink.title}
               </h3>
-              <p className="text-xs text-gray-500 flex items-center gap-1.5">
+              <p className="text-xs text-[#334155] flex items-center gap-1.5">
                 <DeviceIcon className="w-3.5 h-3.5 text-[#153684]" />
                 <span>
                   {t.adaptedTo} <strong>{deviceLabel}</strong> ({width}×{height}px)
@@ -71,7 +71,7 @@ export function ReportModal({
             type="button"
             onClick={onClose}
             aria-label={t.close}
-            className="p-2 rounded-xl bg-white border border-gray-200 text-gray-600 hover:text-[#C81D25] hover:border-[#C81D25]/40 transition-colors"
+            className="p-2 rounded-xl bg-[#E2E8F0] border border-[#94A3B8]/60 text-[#334155] hover:text-[#153684] hover:border-[#153684]/40 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -82,17 +82,17 @@ export function ReportModal({
           {activeLink.modalType === 'reports' ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#153684]/5 border border-[#153684]/15">
+                <div className="p-3.5 rounded-2xl bg-[#153684]/10 border border-[#153684]/25">
                   <p className="text-xs font-semibold text-[#153684]">{t.summaryWorks}</p>
-                  <p className="font-display font-extrabold text-2xl text-[#111827] mt-1">148</p>
+                  <p className="font-display font-extrabold text-2xl text-[#0F172A] mt-1">148</p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#C81D25]/5 border border-[#C81D25]/15">
-                  <p className="text-xs font-semibold text-[#C81D25]">{t.summaryHours}</p>
-                  <p className="font-display font-extrabold text-2xl text-[#111827] mt-1">1,920</p>
+                <div className="p-3.5 rounded-2xl bg-[#334155]/10 border border-[#334155]/25">
+                  <p className="text-xs font-semibold text-[#334155]">{t.summaryHours}</p>
+                  <p className="font-display font-extrabold text-2xl text-[#0F172A] mt-1">1,920</p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#F9C80E]/15 border border-[#F9C80E]/40">
-                  <p className="text-xs font-semibold text-[#111827]">{t.summaryCoverage}</p>
-                  <p className="font-display font-extrabold text-2xl text-[#111827] mt-1">
+                <div className="p-3.5 rounded-2xl bg-[#CBD5E1] border border-[#94A3B8]">
+                  <p className="text-xs font-semibold text-[#1E293B]">{t.summaryCoverage}</p>
+                  <p className="font-display font-extrabold text-2xl text-[#0F172A] mt-1">
                     {t.coverageValue}
                   </p>
                 </div>

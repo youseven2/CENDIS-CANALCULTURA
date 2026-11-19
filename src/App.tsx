@@ -50,7 +50,7 @@ export function App() {
   };
 
   return (
-    <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#F8F9FB]">
+    <div className="h-dvh w-full overflow-hidden flex flex-col bg-gradient-to-br from-[#CBD5E1] via-[#DCE2EA] to-[#B8C4D4]">
       {/* Cintillo Superior: Logos + Buscar + Idioma ES/EN + Solo Home */}
       <CintilloHeader
         deviceInfo={deviceInfo}

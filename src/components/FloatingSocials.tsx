@@ -31,9 +31,9 @@ function SocialSvg({ id }: { id: SocialLink['id'] }) {
 
 const FLOAT_STYLES: Record<SocialLink['id'], string> = {
   instagram:
-    'bg-gradient-to-tr from-[#C81D25] via-[#E1306C] to-[#F9C80E] text-white shadow-[#C81D25]/30',
+    'bg-gradient-to-tr from-[#334155] via-[#475569] to-[#64748B] text-white shadow-slate-700/30',
   facebook: 'bg-[#153684] text-white shadow-[#153684]/30',
-  tiktok: 'bg-[#111827] text-white shadow-gray-900/30',
+  tiktok: 'bg-[#0F172A] text-[#E2E8F0] shadow-slate-900/30',
 };
 
 export function FloatingSocials({ socials, device, ariaLabel }: FloatingSocialsProps) {
@@ -44,8 +44,8 @@ export function FloatingSocials({ socials, device, ariaLabel }: FloatingSocialsP
       aria-label={ariaLabel}
       className={
         isMobile
-          ? 'fixed bottom-11 right-3 z-40 flex items-center gap-2 bg-white/90 backdrop-blur-md p-1.5 rounded-full shadow-xl border border-gray-200/90'
-          : 'fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2.5 bg-white/90 backdrop-blur-md p-2 rounded-2xl shadow-xl border border-gray-200/90'
+          ? 'fixed bottom-12 right-3 z-40 flex items-center gap-2 bg-[#E2E8F0]/90 backdrop-blur-md p-1.5 rounded-full shadow-xl border border-[#94A3B8]/70'
+          : 'fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2.5 bg-[#E2E8F0]/90 backdrop-blur-md p-2 rounded-2xl shadow-xl border border-[#94A3B8]/70'
       }
     >
       {socials.map((social) => (

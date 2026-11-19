@@ -106,25 +106,25 @@ export function SearchOverlay({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 overflow-hidden"
+        className="w-full max-w-2xl bg-[#E2E8F0] rounded-2xl sm:rounded-3xl shadow-2xl border border-[#94A3B8]/70 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Barra de entrada de búsqueda */}
-        <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-gray-200 bg-[#F8F9FB]">
-          <Search className="w-5 h-5 text-[#C81D25] shrink-0" />
+        <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-[#94A3B8]/50 bg-[#CBD5E1]/70">
+          <Search className="w-5 h-5 text-[#153684] shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t.search.placeholder}
-            className="w-full bg-transparent text-sm sm:text-base text-[#111827] placeholder:text-gray-400 focus:outline-none"
+            className="w-full bg-transparent text-sm sm:text-base text-[#0F172A] placeholder:text-[#475569] focus:outline-none"
           />
           <button
             type="button"
             onClick={onClose}
             aria-label={t.search.close}
-            className="p-1.5 rounded-lg text-gray-500 hover:text-[#C81D25] hover:bg-gray-200/70 transition-colors"
+            className="p-1.5 rounded-lg text-[#334155] hover:text-[#153684] hover:bg-[#94A3B8]/30 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
