@@ -3,6 +3,7 @@ import {
   Clock,
   Disc3,
   Eye,
+  FileDown,
   Flame,
   Globe2,
   Mic,
@@ -18,6 +19,7 @@ import {
 import { DeviceInfo } from '../hooks/useDeviceType';
 import { PortalStatsState, formatDuration } from '../hooks/usePortalStats';
 import { Language, TranslatedLink, TranslationBundle } from '../i18n/translations';
+import { exportStatsToPdf } from '../utils/exportStatsPdf';
 
 interface ReportModalProps {
   activeLink: TranslatedLink | null;
@@ -81,14 +83,27 @@ export function ReportModal({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label={t.close}
-            className="p-2 rounded-xl bg-[#E2E8F0] border border-[#94A3B8]/60 text-[#334155] hover:text-[#153684] hover:border-[#153684]/40 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            {activeLink.modalType === 'reports' && (
+              <button
+                type="button"
+                onClick={() => exportStatsToPdf(stats, language)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#B12722] hover:bg-[#8E161B] active:scale-[0.98] text-white font-display font-bold text-xs shadow-sm transition-all"
+              >
+                <FileDown className="w-4 h-4" />
+                <span>{language === 'es' ? 'Reporte PDF' : 'Export PDF'}</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label={t.close}
+              className="p-2 rounded-xl bg-[#E2E8F0] border border-[#94A3B8]/60 text-[#334155] hover:text-[#153684] hover:border-[#153684]/40 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Cuerpo Adaptativo */}
