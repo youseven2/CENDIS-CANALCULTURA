@@ -24,14 +24,25 @@ export function CintilloHeader({
 }: CintilloHeaderProps) {
   return (
     <header className="w-full shrink-0 bg-gradient-to-r from-[#DCE2EA] via-[#E8ECF2] to-[#DCE2EA] border-b border-[#94A3B8]/50 shadow-sm z-30">
-      {/* Cintillo metálico superior con acento tricolor */}
-      <div className="h-1.5 w-full flex">
+      {/* Cintillo oficial superior del Ministerio del Poder Popular para la Cultura */}
+      <div className="w-full bg-white border-b border-[#94A3B8]/40">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-0.5 sm:py-1 flex items-center justify-start">
+          <img
+            src="/logos/cintillo-superior.png"
+            alt="República Bolivariana de Venezuela - Ministerio del Poder Popular para la Cultura"
+            className="h-6 sm:h-8 md:h-9 w-auto max-w-full object-contain"
+          />
+        </div>
+      </div>
+
+      {/* Cintillo metálico con acento tricolor */}
+      <div className="h-1 w-full flex">
         <div className="flex-1 bg-[#F9C80E]" />
         <div className="flex-1 bg-[#153684]" />
         <div className="flex-1 bg-[#C81D25]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-1.5 sm:py-2">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-1 sm:py-1.5">
         <div className="flex items-center justify-between gap-2">
           {/* LADO IZQUIERDO: Ambos logos (sin nombres) + Buscar + Traducción ES/EN */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">

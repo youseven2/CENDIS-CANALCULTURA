@@ -31,7 +31,7 @@ export function FooterCintillo({
         <div className="flex-1 bg-[#C81D25]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-4 text-[10px] sm:text-xs">
+      <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-1 sm:py-1.5 flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-4 text-[10px] sm:text-xs">
         <div className="flex items-center gap-2.5 min-w-0">
           {/* Logo oficial del Ministerio de Cultura en el cintillo (acceso administrativo oculto) */}
           <button

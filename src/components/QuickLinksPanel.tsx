@@ -42,7 +42,7 @@ export function QuickLinksPanel({ t, onOpenLink, device }: QuickLinksPanelProps)
   return (
     <aside
       aria-label={t.title}
-      className="w-full h-full flex flex-col justify-between gap-1.5 bg-gradient-to-b from-[#E2E8F0] to-[#CBD5E1] rounded-2xl sm:rounded-3xl border border-[#94A3B8]/60 shadow-md p-2.5 sm:p-3 overflow-hidden"
+      className="w-full h-full flex flex-col justify-between gap-1 bg-gradient-to-b from-[#E2E8F0] to-[#CBD5E1] rounded-2xl sm:rounded-3xl border border-[#94A3B8]/60 shadow-md p-2 sm:p-3 overflow-hidden"
     >
       <div className="flex items-center justify-between shrink-0 pb-1 border-b border-[#94A3B8]/40">
         <div>

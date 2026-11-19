@@ -100,7 +100,7 @@ export function HeroCarousel({
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className={`relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br ${style.bg} border border-[#94A3B8]/50 shadow-lg transition-all duration-500 flex flex-col justify-between p-4 sm:p-6 lg:p-8`}
+      className={`relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br ${style.bg} border border-[#94A3B8]/50 shadow-lg transition-all duration-500 flex flex-col justify-between p-3.5 sm:p-5 lg:p-6`}
     >
       <div
         className={`pointer-events-none absolute -right-12 -top-12 w-44 h-44 sm:w-64 sm:h-64 rounded-full blur-2xl ${style.decorCircle1} transition-colors duration-500`}

@@ -99,14 +99,14 @@ export function App() {
       />
 
       {/* Área Principal Sin Deslizamiento */}
-      <main className="flex-1 min-h-0 w-full max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-2 sm:py-3 flex flex-col gap-2 sm:gap-3">
+      <main className="flex-1 min-h-0 w-full max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-1.5 sm:py-2.5 flex flex-col gap-1.5 sm:gap-2.5">
         <div
-          className={`flex-1 min-h-0 w-full grid gap-2 sm:gap-4 ${
+          className={`flex-1 min-h-0 w-full grid gap-2 sm:gap-3.5 ${
             deviceInfo.device === 'desktop'
               ? 'grid-cols-12 grid-rows-1'
               : deviceInfo.device === 'tablet'
-                ? 'grid-cols-1 grid-rows-[1.05fr_1fr]'
-                : 'grid-cols-1 grid-rows-[0.9fr_1.1fr]'
+                ? 'grid-cols-1 grid-rows-[1fr_1fr]'
+                : 'grid-cols-1 grid-rows-[0.88fr_1.12fr]'
           }`}
         >
           {/* Carrusel Principal */}
