@@ -25,70 +25,69 @@ export interface PortalStatsState {
   topContent: ContentStat[];
 }
 
-const VISITS_STORAGE_KEY = 'cendis_canal_cultura_visits';
-const CONTENT_STORAGE_KEY = 'cendis_canal_cultura_content_views';
+const VISITS_STORAGE_KEY = 'cendis_canal_cultura_visits_v2';
+const CONTENT_STORAGE_KEY = 'cendis_canal_cultura_content_views_v2';
+const COUNTRY_STORAGE_KEY = 'cendis_canal_cultura_country_views_v2';
 
-const BASE_VISITS = 14820;
-
-const BASE_COUNTRIES: CountryStat[] = [
-  { countryEs: 'Venezuela', countryEn: 'Venezuela', code: 'VE', visits: 10967, percent: 74 },
-  { countryEs: 'Colombia', countryEn: 'Colombia', code: 'CO', visits: 1334, percent: 9 },
-  { countryEs: 'España', countryEn: 'Spain', code: 'ES', visits: 889, percent: 6 },
-  { countryEs: 'Estados Unidos', countryEn: 'United States', code: 'US', visits: 741, percent: 5 },
-  { countryEs: 'Argentina', countryEn: 'Argentina', code: 'AR', visits: 445, percent: 3 },
-  { countryEs: 'Otros Países', countryEn: 'Other Countries', code: 'INT', visits: 444, percent: 3 },
+const EMPTY_COUNTRIES: Omit<CountryStat, 'visits' | 'percent'>[] = [
+  { countryEs: 'Venezuela', countryEn: 'Venezuela', code: 'VE' },
+  { countryEs: 'Colombia', countryEn: 'Colombia', code: 'CO' },
+  { countryEs: 'España', countryEn: 'Spain', code: 'ES' },
+  { countryEs: 'Estados Unidos', countryEn: 'United States', code: 'US' },
+  { countryEs: 'Argentina', countryEn: 'Argentina', code: 'AR' },
+  { countryEs: 'Otros Países', countryEn: 'Other Countries', code: 'INT' },
 ];
 
-const BASE_CONTENT: ContentStat[] = [
+const EMPTY_CONTENT: Omit<ContentStat, 'views' | 'avgTime'>[] = [
   {
     id: 'canal-envivo',
     titleEs: 'Señal en Vivo · Canal Cultura',
     titleEn: 'Live Broadcast · Canal Cultura',
-    views: 5420,
-    avgTime: '06m 42s',
   },
   {
     id: 'cendis-catalogo',
     titleEs: 'Catálogo Sonoro CENDIS',
     titleEn: 'CENDIS Sound Catalog',
-    views: 4185,
-    avgTime: '05m 18s',
   },
   {
     id: 'canal-programacion',
     titleEs: 'Parrilla y Programación',
     titleEn: 'Schedule & Programming',
-    views: 2640,
-    avgTime: '03m 54s',
   },
   {
     id: 'organigrama',
     titleEs: 'Organigrama Oficial CENDIS',
     titleEn: 'Official CENDIS Org Chart',
-    views: 1510,
-    avgTime: '02m 45s',
   },
   {
     id: 'conocenos',
     titleEs: 'Conócenos · CENDIS y Canal Cultura',
     titleEn: 'About Us · CENDIS & Canal Cultura',
-    views: 1065,
-    avgTime: '02m 20s',
   },
 ];
 
-function detectVisitorRegion(): string {
+function detectVisitorCountryCode(): { label: string; code: string } {
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    if (tz.includes('Caracas')) return 'Venezuela (VE)';
     const locale = navigator.language || '';
-    if (locale.includes('VE')) return 'Venezuela (VE)';
-    if (locale.includes('CO')) return 'Colombia (CO)';
-    if (locale.includes('ES')) return 'España (ES)';
-    if (locale.includes('US')) return 'Estados Unidos (US)';
-    return tz ? tz.replace('_', ' ') : 'Venezuela (VE)';
+    if (tz.includes('Caracas') || locale.includes('VE')) {
+      return { label: 'Venezuela (VE)', code: 'VE' };
+    }
+    if (tz.includes('Bogota') || locale.includes('CO')) {
+      return { label: 'Colombia (CO)', code: 'CO' };
+    }
+    if (tz.includes('Madrid') || locale.includes('ES')) {
+      return { label: 'España (ES)', code: 'ES' };
+    }
+    if (tz.includes('America/New_York') || locale.includes('US')) {
+      return { label: 'Estados Unidos (US)', code: 'US' };
+    }
+    if (tz.includes('Buenos_Aires') || locale.includes('AR')) {
+      return { label: 'Argentina (AR)', code: 'AR' };
+    }
+    return { label: tz ? tz.replace('_', ' ') : 'Sin registro', code: 'INT' };
   } catch {
-    return 'Venezuela (VE)';
+    return { label: 'Sin registro', code: 'INT' };
   }
 }
 
@@ -99,18 +98,36 @@ export function formatDuration(totalSeconds: number): string {
 }
 
 /**
- * Tracks real-time session viewing time, visit count, visitor region, and most-viewed content.
+ * Starts all metrics at zero (empty baseline) and records real browser visits,
+ * viewing time, country counts, and content views from scratch.
  */
 export function usePortalStats() {
+  const [detected] = useState(() => detectVisitorCountryCode());
   const [sessionSeconds, setSessionSeconds] = useState(0);
-  const [totalVisits, setTotalVisits] = useState<number>(() => {
+
+  const [totalVisits] = useState<number>(() => {
     try {
       const stored = Number(window.localStorage.getItem(VISITS_STORAGE_KEY) || '0');
-      const next = (stored >= BASE_VISITS ? stored : BASE_VISITS) + 1;
+      const next = stored + 1;
       window.localStorage.setItem(VISITS_STORAGE_KEY, String(next));
       return next;
     } catch {
-      return BASE_VISITS + 1;
+      return 0;
+    }
+  });
+
+  const [countryVisits] = useState<Record<string, number>>(() => {
+    try {
+      const raw = window.localStorage.getItem(COUNTRY_STORAGE_KEY);
+      const parsed: Record<string, number> = raw ? JSON.parse(raw) : {};
+      const updated = {
+        ...parsed,
+        [detected.code]: (parsed[detected.code] || 0) + 1,
+      };
+      window.localStorage.setItem(COUNTRY_STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    } catch {
+      return {};
     }
   });
 
@@ -123,8 +140,6 @@ export function usePortalStats() {
     }
     return {};
   });
-
-  const [currentVisitorRegion] = useState<string>(() => detectVisitorRegion());
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -143,20 +158,29 @@ export function usePortalStats() {
       }
       return updated;
     });
-    setTotalVisits((v) => v);
   };
 
-  const topContent: ContentStat[] = BASE_CONTENT.map((item) => ({
+  const totalCountryVisits = Object.values(countryVisits).reduce((acc, v) => acc + v, 0);
+
+  const countries: CountryStat[] = EMPTY_COUNTRIES.map((c) => {
+    const visits = countryVisits[c.code] || 0;
+    const percent =
+      totalCountryVisits > 0 ? Math.round((visits / totalCountryVisits) * 100) : 0;
+    return { ...c, visits, percent };
+  });
+
+  const topContent: ContentStat[] = EMPTY_CONTENT.map((item) => ({
     ...item,
-    views: item.views + (contentViews[item.id] || 0),
+    views: contentViews[item.id] || 0,
+    avgTime: '00m 00s',
   })).sort((a, b) => b.views - a.views);
 
   const stats: PortalStatsState = {
     totalVisits,
     sessionSeconds,
-    avgViewTime: '04m 38s',
-    currentVisitorRegion,
-    countries: BASE_COUNTRIES,
+    avgViewTime: formatDuration(sessionSeconds),
+    currentVisitorRegion: detected.label,
+    countries,
     topContent,
   };
 
