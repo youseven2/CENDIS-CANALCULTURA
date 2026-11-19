@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Disc3, Radio } from 'lucide-react';
-import { CarouselSlide } from '../data/portalData';
 import { DeviceCategory } from '../hooks/useDeviceType';
+import { TranslatedSlide, TranslationBundle } from '../i18n/translations';
 
 interface HeroCarouselProps {
-  slides: CarouselSlide[];
+  t: TranslationBundle['carousel'];
   activeIndex: number;
   onChangeIndex: (index: number) => void;
   onSelectSlideAction: (targetLinkId: string) => void;
@@ -12,7 +12,7 @@ interface HeroCarouselProps {
 }
 
 const ACCENT_STYLES: Record<
-  CarouselSlide['accentColor'],
+  TranslatedSlide['accentColor'],
   {
     bg: string;
     badgeBg: string;
@@ -49,7 +49,7 @@ const ACCENT_STYLES: Record<
 };
 
 export function HeroCarousel({
-  slides,
+  t,
   activeIndex,
   onChangeIndex,
   onSelectSlideAction,
@@ -57,6 +57,7 @@ export function HeroCarousel({
 }: HeroCarouselProps) {
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const slides = t.slides;
 
   useEffect(() => {
     if (isPaused) return;
@@ -66,7 +67,7 @@ export function HeroCarousel({
     return () => window.clearInterval(timer);
   }, [activeIndex, isPaused, onChangeIndex, slides.length]);
 
-  const currentSlide = slides[activeIndex];
+  const currentSlide = slides[activeIndex] ?? slides[0];
   const style = ACCENT_STYLES[currentSlide.accentColor];
   const isLightBg = currentSlide.accentColor === 'yellow';
 
@@ -94,14 +95,13 @@ export function HeroCarousel({
 
   return (
     <section
-      aria-label="Carrusel principal CENDIS y Canal Cultura"
+      aria-label={t.ariaLabel}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       className={`relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br ${style.bg} shadow-lg transition-all duration-500 flex flex-col justify-between p-4 sm:p-6 lg:p-8`}
     >
-      {/* Elementos decorativos inspirados en los 3 cuadros del logo Cultura Venezuela */}
       <div
         className={`pointer-events-none absolute -right-12 -top-12 w-44 h-44 sm:w-64 sm:h-64 rounded-full blur-2xl ${style.decorCircle1} transition-colors duration-500`}
       />
@@ -109,14 +109,14 @@ export function HeroCarousel({
         className={`pointer-events-none absolute -left-10 -bottom-12 w-40 h-40 sm:w-56 sm:h-56 rounded-full blur-2xl ${style.decorCircle2} transition-colors duration-500`}
       />
 
-      {/* Motivo gráfico institucional sutil en esquina superior derecha */}
+      {/* Motivo gráfico institucional */}
       <div className="pointer-events-none absolute right-4 top-4 sm:right-6 sm:top-6 flex items-center gap-1.5 opacity-85">
         <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#F9C80E] shadow-sm" />
         <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#153684] shadow-sm" />
         <span className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-[#C81D25] border border-white/40 shadow-sm" />
       </div>
 
-      {/* Contenido superior */}
+      {/* Badge superior */}
       <div className="relative z-10 flex items-center gap-2 pr-14">
         <span
           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider shadow-sm ${style.badgeBg} ${style.badgeText}`}
@@ -130,7 +130,7 @@ export function HeroCarousel({
         </span>
       </div>
 
-      {/* Contenido central del slide */}
+      {/* Contenido central */}
       <div className="relative z-10 my-auto py-2 sm:py-4 max-w-2xl">
         <p
           className={`text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-1.5 ${
@@ -170,9 +170,9 @@ export function HeroCarousel({
         </div>
       </div>
 
-      {/* Controles inferiores del carrusel */}
+      {/* Controles del carrusel */}
       <div className="relative z-10 flex items-center justify-between gap-3 pt-2 border-t border-white/15">
-        <div className="flex items-center gap-1.5 sm:gap-2" role="tablist" aria-label="Diapositivas">
+        <div className="flex items-center gap-1.5 sm:gap-2" role="tablist">
           {slides.map((slide, idx) => {
             const active = idx === activeIndex;
             return (
@@ -181,7 +181,7 @@ export function HeroCarousel({
                 type="button"
                 role="tab"
                 aria-selected={active}
-                aria-label={`Ir a diapositiva ${idx + 1}: ${slide.title}`}
+                aria-label={slide.title}
                 onClick={() => onChangeIndex(idx)}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   active
@@ -201,7 +201,7 @@ export function HeroCarousel({
           <button
             type="button"
             onClick={handlePrev}
-            aria-label="Diapositiva anterior"
+            aria-label={t.prevSlide}
             className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
               isLightBg
                 ? 'bg-[#111827]/10 hover:bg-[#111827]/20 text-[#111827]'
@@ -213,7 +213,7 @@ export function HeroCarousel({
           <button
             type="button"
             onClick={handleNext}
-            aria-label="Siguiente diapositiva"
+            aria-label={t.nextSlide}
             className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
               isLightBg
                 ? 'bg-[#111827]/10 hover:bg-[#111827]/20 text-[#111827]'

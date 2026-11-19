@@ -1,17 +1,34 @@
-import { BarChart3, CheckCircle2, Disc3, Monitor, Radio, Smartphone, Tablet, X } from 'lucide-react';
-import { INSTITUTIONAL_REPORTS, PortalLink } from '../data/portalData';
+import {
+  BarChart3,
+  CheckCircle2,
+  Disc3,
+  Monitor,
+  Radio,
+  Smartphone,
+  Tablet,
+  X,
+} from 'lucide-react';
 import { DeviceInfo } from '../hooks/useDeviceType';
+import { TranslatedLink, TranslationBundle } from '../i18n/translations';
 
 interface ReportModalProps {
-  activeLink: PortalLink | null;
+  activeLink: TranslatedLink | null;
   deviceInfo: DeviceInfo;
+  deviceLabel: string;
+  t: TranslationBundle['modal'];
   onClose: () => void;
 }
 
-export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProps) {
+export function ReportModal({
+  activeLink,
+  deviceInfo,
+  deviceLabel,
+  t,
+  onClose,
+}: ReportModalProps) {
   if (!activeLink) return null;
 
-  const { device, label, width, height } = deviceInfo;
+  const { device, width, height } = deviceInfo;
   const DeviceIcon =
     device === 'mobile' ? Smartphone : device === 'tablet' ? Tablet : Monitor;
 
@@ -20,7 +37,7 @@ export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProp
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-[#111827]/60 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-[#111827]/60 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -44,7 +61,7 @@ export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProp
               <p className="text-xs text-gray-500 flex items-center gap-1.5">
                 <DeviceIcon className="w-3.5 h-3.5 text-[#153684]" />
                 <span>
-                  Vista adaptada a <strong>{label}</strong> ({width}×{height}px)
+                  {t.adaptedTo} <strong>{deviceLabel}</strong> ({width}×{height}px)
                 </span>
               </p>
             </div>
@@ -53,7 +70,7 @@ export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProp
           <button
             type="button"
             onClick={onClose}
-            aria-label="Cerrar ventana"
+            aria-label={t.close}
             className="p-2 rounded-xl bg-white border border-gray-200 text-gray-600 hover:text-[#C81D25] hover:border-[#C81D25]/40 transition-colors"
           >
             <X className="w-5 h-5" />
@@ -64,28 +81,26 @@ export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProp
         <div className="p-4 sm:p-6 overflow-y-auto custom-scroll space-y-4">
           {activeLink.modalType === 'reports' ? (
             <>
-              {/* Tarjetas resumen */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#153684]/5 border border-[#153684]/15">
-                  <p className="text-xs font-semibold text-[#153684]">Obras CENDIS</p>
+                  <p className="text-xs font-semibold text-[#153684]">{t.summaryWorks}</p>
                   <p className="font-display font-extrabold text-2xl text-[#111827] mt-1">148</p>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#C81D25]/5 border border-[#C81D25]/15">
-                  <p className="text-xs font-semibold text-[#C81D25]">Horas Canal Cultura</p>
+                  <p className="text-xs font-semibold text-[#C81D25]">{t.summaryHours}</p>
                   <p className="font-display font-extrabold text-2xl text-[#111827] mt-1">1,920</p>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F9C80E]/15 border border-[#F9C80E]/40">
-                  <p className="text-xs font-semibold text-[#111827]">Cobertura Nacional</p>
+                  <p className="text-xs font-semibold text-[#111827]">{t.summaryCoverage}</p>
                   <p className="font-display font-extrabold text-2xl text-[#111827] mt-1">
-                    24 Estados
+                    {t.coverageValue}
                   </p>
                 </div>
               </div>
 
-              {/* Renderizado adaptativo: Tarjetas en Celular, Tabla completa en Tablet/Computadora */}
               {device === 'mobile' ? (
                 <div className="space-y-2.5">
-                  {INSTITUTIONAL_REPORTS.map((row) => (
+                  {t.reports.map((row) => (
                     <div
                       key={row.id}
                       className="p-3.5 rounded-xl border border-gray-200 bg-[#F8F9FB] space-y-1.5"
@@ -111,16 +126,16 @@ export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProp
                   <table className="w-full text-left border-collapse text-sm">
                     <thead>
                       <tr className="bg-[#153684] text-white font-display">
-                        <th className="py-3 px-4 font-semibold">Código</th>
-                        <th className="py-3 px-4 font-semibold">Ente / Área</th>
-                        <th className="py-3 px-4 font-semibold">Indicador</th>
-                        <th className="py-3 px-4 font-semibold">Periodo</th>
-                        <th className="py-3 px-4 font-semibold">Resultado</th>
-                        <th className="py-3 px-4 font-semibold">Estado</th>
+                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.code}</th>
+                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.area}</th>
+                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.indicator}</th>
+                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.period}</th>
+                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.result}</th>
+                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.status}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {INSTITUTIONAL_REPORTS.map((row) => (
+                      {t.reports.map((row) => (
                         <tr key={row.id} className="hover:bg-gray-50 transition-colors">
                           <td className="py-3 px-4 font-mono text-xs text-gray-500">{row.id}</td>
                           <td className="py-3 px-4 font-semibold text-[#153684]">{row.area}</td>
@@ -156,13 +171,12 @@ export function ReportModal({ activeLink, deviceInfo, onClose }: ReportModalProp
               </div>
               <div className="space-y-1.5">
                 <h4 className="font-display font-bold text-base text-[#111827]">
-                  Módulo listo para enlazar: {activeLink.title}
+                  {t.moduleReadyTitle} {activeLink.title}
                 </h4>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  {activeLink.description} Puedes conectar este acceso directo a tu URL oficial de
-                  transmisión, catálogo discográfico o sistema interno en{' '}
+                  {activeLink.description} {t.moduleReadyBody}{' '}
                   <code className="px-1.5 py-0.5 rounded bg-gray-200 text-xs font-mono">
-                    src/data/portalData.ts
+                    src/i18n/translations.ts
                   </code>
                   .
                 </p>

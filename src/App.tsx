@@ -1,36 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CintilloHeader } from './components/CintilloHeader';
+import { FloatingSocials } from './components/FloatingSocials';
+import { FooterCintillo } from './components/FooterCintillo';
 import { HeroCarousel } from './components/HeroCarousel';
 import { QuickLinksPanel } from './components/QuickLinksPanel';
 import { ReportModal } from './components/ReportModal';
-import {
-  CAROUSEL_SLIDES,
-  PORTAL_LINKS,
-  PortalLink,
-  SOCIAL_LINKS,
-} from './data/portalData';
+import { SearchOverlay } from './components/SearchOverlay';
+import { SOCIAL_LINKS } from './data/portalData';
 import { useDeviceType } from './hooks/useDeviceType';
+import { Language, TRANSLATIONS, TranslatedLink } from './i18n/translations';
 
 export function App() {
   const deviceInfo = useDeviceType();
+  const [language, setLanguage] = useState<Language>('es');
   const [activeSlide, setActiveSlide] = useState(0);
-  const [selectedLink, setSelectedLink] = useState<PortalLink | null>(null);
+  const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const t = TRANSLATIONS[language];
+  const deviceLabel = t.header.deviceLabels[deviceInfo.device];
+  const selectedLink =
+    selectedLinkId !== null
+      ? t.linksPanel.links.find((l) => l.id === selectedLinkId) ?? null
+      : null;
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const handleGoHome = () => {
-    setSelectedLink(null);
+    setSelectedLinkId(null);
+    setIsSearchOpen(false);
     setActiveSlide(0);
   };
 
-  const handleOpenLink = (link: PortalLink) => {
+  const handleOpenLink = (link: TranslatedLink) => {
     if (link.externalUrl) {
       window.open(link.externalUrl, '_blank', 'noopener,noreferrer');
       return;
     }
-    setSelectedLink(link);
+    setSelectedLinkId(link.id);
   };
 
   const handleSelectSlideAction = (targetLinkId: string) => {
-    const found = PORTAL_LINKS.find((l) => l.id === targetLinkId);
+    const found = t.linksPanel.links.find((l) => l.id === targetLinkId);
     if (found) {
       handleOpenLink(found);
     }
@@ -38,10 +51,17 @@ export function App() {
 
   return (
     <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#F8F9FB]">
-      {/* Cintillo Superior: Solo Home + Logos + Indicador de dispositivo */}
-      <CintilloHeader deviceInfo={deviceInfo} onGoHome={handleGoHome} />
+      {/* Cintillo Superior: Logos + Buscar + Idioma ES/EN + Solo Home */}
+      <CintilloHeader
+        deviceInfo={deviceInfo}
+        language={language}
+        onToggleLanguage={setLanguage}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        onGoHome={handleGoHome}
+        t={t.header}
+      />
 
-      {/* Área Principal Sin Deslizamiento (Single-Screen Responsive) */}
+      {/* Área Principal Sin Deslizamiento */}
       <main className="flex-1 min-h-0 w-full max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-2.5 sm:py-4">
         <div
           className={`h-full w-full grid gap-2.5 sm:gap-4 ${
@@ -59,7 +79,7 @@ export function App() {
             }`}
           >
             <HeroCarousel
-              slides={CAROUSEL_SLIDES}
+              t={t.carousel}
               activeIndex={activeSlide}
               onChangeIndex={setActiveSlide}
               onSelectSlideAction={handleSelectSlideAction}
@@ -67,15 +87,14 @@ export function App() {
             />
           </div>
 
-          {/* Enlaces Principales + Redes Sociales */}
+          {/* Enlaces Principales */}
           <div
             className={`min-h-0 ${
               deviceInfo.device === 'desktop' ? 'col-span-5 h-full' : 'h-full'
             }`}
           >
             <QuickLinksPanel
-              links={PORTAL_LINKS}
-              socials={SOCIAL_LINKS}
+              t={t.linksPanel}
               onOpenLink={handleOpenLink}
               device={deviceInfo.device}
             />
@@ -83,24 +102,36 @@ export function App() {
         </div>
       </main>
 
-      {/* Pie institucional compacto */}
-      <footer className="shrink-0 w-full bg-white border-t border-gray-200/80 px-3 sm:px-6 py-1.5 sm:py-2">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-[10px] sm:text-xs text-gray-500">
-          <span className="truncate font-medium">
-            © {new Date().getFullYear()} CENDIS · Canal Cultura — Ministerio del Poder Popular para la Cultura
-          </span>
-          <span className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-[#153684]">
-            <span className="w-2 h-2 rounded-full bg-[#C81D25]" />
-            Adaptado automáticamente a {deviceInfo.label}
-          </span>
-        </div>
-      </footer>
+      {/* Cintillo de Pie de Página: Ministerio del Poder Popular para la Cultura */}
+      <FooterCintillo
+        deviceInfo={deviceInfo}
+        t={t.footer}
+        deviceLabel={deviceLabel}
+      />
+
+      {/* Botones Flotantes de Redes Sociales: Instagram, Facebook, TikTok */}
+      <FloatingSocials
+        socials={SOCIAL_LINKS}
+        device={deviceInfo.device}
+        ariaLabel={t.socials.ariaLabel}
+      />
+
+      {/* Buscador dentro de la misma página */}
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        t={t}
+        onSelectSlide={(idx) => setActiveSlide(idx)}
+        onSelectLink={handleOpenLink}
+      />
 
       {/* Modal adaptativo para enlaces y reportes */}
       <ReportModal
         activeLink={selectedLink}
         deviceInfo={deviceInfo}
-        onClose={() => setSelectedLink(null)}
+        deviceLabel={deviceLabel}
+        t={t.modal}
+        onClose={() => setSelectedLinkId(null)}
       />
     </div>
   );
