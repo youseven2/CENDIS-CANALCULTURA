@@ -5,7 +5,10 @@ import {
   Eye,
   Flame,
   Globe2,
+  Mic,
   Monitor,
+  Music,
+  Newspaper,
   Radio,
   Smartphone,
   Tablet,
@@ -225,6 +228,12 @@ export function ReportModal({
                   <Radio className="w-6 h-6" />
                 ) : activeLink.category === 'cendis' ? (
                   <Disc3 className="w-6 h-6" />
+                ) : activeLink.category === 'concerts' ? (
+                  <Music className="w-6 h-6" />
+                ) : activeLink.category === 'podcast' ? (
+                  <Mic className="w-6 h-6" />
+                ) : activeLink.category === 'news' ? (
+                  <Newspaper className="w-6 h-6" />
                 ) : (
                   <BarChart3 className="w-6 h-6" />
                 )}

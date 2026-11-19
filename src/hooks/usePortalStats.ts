@@ -41,28 +41,33 @@ const EMPTY_COUNTRIES: Omit<CountryStat, 'visits' | 'percent'>[] = [
 const EMPTY_CONTENT: Omit<ContentStat, 'views' | 'avgTime'>[] = [
   {
     id: 'canal-envivo',
-    titleEs: 'Señal en Vivo · Canal Cultura',
-    titleEn: 'Live Broadcast · Canal Cultura',
+    titleEs: 'Señal en Vivo',
+    titleEn: 'Live Signal',
   },
   {
     id: 'cendis-catalogo',
-    titleEs: 'Catálogo Sonoro CENDIS',
-    titleEn: 'CENDIS Sound Catalog',
+    titleEs: 'Catálogo',
+    titleEn: 'Catalog',
+  },
+  {
+    id: 'conciertos',
+    titleEs: 'Conciertos',
+    titleEn: 'Concerts',
+  },
+  {
+    id: 'podcast',
+    titleEs: 'Podcast',
+    titleEn: 'Podcast',
+  },
+  {
+    id: 'noticias',
+    titleEs: 'Noticias',
+    titleEn: 'News',
   },
   {
     id: 'canal-programacion',
-    titleEs: 'Parrilla y Programación',
-    titleEn: 'Schedule & Programming',
-  },
-  {
-    id: 'organigrama',
-    titleEs: 'Organigrama Oficial CENDIS',
-    titleEn: 'Official CENDIS Org Chart',
-  },
-  {
-    id: 'conocenos',
-    titleEs: 'Conócenos · CENDIS y Canal Cultura',
-    titleEn: 'About Us · CENDIS & Canal Cultura',
+    titleEs: 'Parrilla',
+    titleEn: 'Schedule',
   },
 ];
 

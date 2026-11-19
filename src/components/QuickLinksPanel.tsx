@@ -4,6 +4,9 @@ import {
   CalendarDays,
   ChevronRight,
   Disc3,
+  Mic,
+  Music,
+  Newspaper,
   Radio,
 } from 'lucide-react';
 import { DeviceCategory } from '../hooks/useDeviceType';
@@ -21,6 +24,12 @@ function getLinkIcon(category: TranslatedLink['category']) {
       return Radio;
     case 'cendis':
       return Disc3;
+    case 'concerts':
+      return Music;
+    case 'podcast':
+      return Mic;
+    case 'news':
+      return Newspaper;
     case 'reportes':
       return BarChart3;
     case 'institucional':
@@ -66,7 +75,7 @@ export function QuickLinksPanel({ t, onOpenLink, device }: QuickLinksPanelProps)
               key={link.id}
               type="button"
               onClick={() => onOpenLink(link)}
-              className={`group w-full text-left flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-xl border border-[#94A3B8]/50 bg-[#F1F5F9]/75 hover:bg-[#F8FAFC] hover:border-[#153684]/50 hover:shadow-md transition-all active:scale-[0.99] ${
+              className={`group w-full text-left flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border border-[#94A3B8]/50 bg-[#F1F5F9]/75 hover:bg-[#F8FAFC] hover:border-[#153684]/50 hover:shadow-md transition-all active:scale-[0.99] ${
                 isLastOddMobile ? 'col-span-2' : ''
               }`}
             >

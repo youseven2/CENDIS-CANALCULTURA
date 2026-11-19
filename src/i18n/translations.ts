@@ -15,11 +15,11 @@ export interface TranslatedLink {
   id: string;
   title: string;
   description: string;
-  category: 'canal' | 'cendis' | 'reportes' | 'institucional';
+  category: 'canal' | 'cendis' | 'concerts' | 'podcast' | 'news' | 'reportes' | 'institucional';
   accent: string;
   badge?: string;
   externalUrl?: string;
-  modalType?: 'reports' | 'live' | 'catalog' | 'schedule' | 'about';
+  modalType?: 'reports' | 'live' | 'catalog' | 'concerts' | 'podcast' | 'news' | 'schedule' | 'about';
 }
 
 export interface TranslatedReportRow {
@@ -148,14 +148,14 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'slide-cultura',
-          badge: 'Ministerio de Cultura',
+          badge: 'Conciertos y Cultura',
           title: 'Entes Adscritos e Identidad Nacional',
           subtitle:
-            'Articulamos la música, las artes visuales y el patrimonio sonoro venezolano bajo un mismo portal accesible.',
+            'Articulamos conciertos, podcast, noticias y el patrimonio sonoro venezolano bajo un mismo portal accesible.',
           accentColor: 'red',
           tag: 'Gestión Cultural',
-          actionLabel: 'Ir al Portal',
-          targetLinkId: 'ministerio-cultura',
+          actionLabel: 'Ver Conciertos',
+          targetLinkId: 'conciertos',
         },
       ],
     },
@@ -166,8 +166,8 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
       links: [
         {
           id: 'canal-envivo',
-          title: 'Señal en Vivo · Canal Cultura',
-          description: 'Transmisión audiovisual continua y eventos especiales.',
+          title: 'Señal en Vivo',
+          description: 'Transmisión audiovisual continua de Canal Cultura.',
           category: 'canal',
           accent: '#153684',
           badge: 'EN VIVO',
@@ -175,28 +175,44 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'cendis-catalogo',
-          title: 'Catálogo Sonoro CENDIS',
-          description: 'Fonoteca digital, producciones y grabaciones nacionales.',
+          title: 'Catálogo',
+          description: 'Fonoteca digital, producciones y grabaciones CENDIS.',
           category: 'cendis',
           accent: '#D97706',
           badge: 'MÚSICA',
           modalType: 'catalog',
         },
         {
+          id: 'conciertos',
+          title: 'Conciertos',
+          description: 'Recitales, festivales y sesiones musicales en vivo.',
+          category: 'concerts',
+          accent: '#B12722',
+          modalType: 'concerts',
+        },
+        {
+          id: 'podcast',
+          title: 'Podcast',
+          description: 'Episodios culturales, entrevistas y memoria sonora.',
+          category: 'podcast',
+          accent: '#334155',
+          modalType: 'podcast',
+        },
+        {
+          id: 'noticias',
+          title: 'Noticias',
+          description: 'Actualidad cultural, convocatorias y eventos del ente.',
+          category: 'news',
+          accent: '#0F766E',
+          modalType: 'news',
+        },
+        {
           id: 'canal-programacion',
-          title: 'Parrilla y Programación',
-          description: 'Horarios culturales, ciclos de cine y conciertos.',
+          title: 'Parrilla',
+          description: 'Horarios culturales, ciclos de cine y programación.',
           category: 'canal',
           accent: '#0284C7',
           modalType: 'schedule',
-        },
-        {
-          id: 'ministerio-cultura',
-          title: 'Portal Ministerio de Cultura',
-          description: 'Información institucional, entes adscritos y convocatorias.',
-          category: 'institucional',
-          accent: '#153684',
-          modalType: 'about',
         },
       ],
     },
@@ -330,14 +346,14 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'slide-cultura',
-          badge: 'Ministry of Culture',
+          badge: 'Concerts & Culture',
           title: 'Affiliated Agencies & National Identity',
           subtitle:
-            'Uniting music, visual arts, and Venezuelan sound heritage under a single accessible cultural portal.',
+            'Uniting concerts, podcasts, news, and Venezuelan sound heritage under a single accessible cultural portal.',
           accentColor: 'red',
           tag: 'Cultural Management',
-          actionLabel: 'Explore Portal',
-          targetLinkId: 'ministerio-cultura',
+          actionLabel: 'View Concerts',
+          targetLinkId: 'conciertos',
         },
       ],
     },
@@ -348,8 +364,8 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
       links: [
         {
           id: 'canal-envivo',
-          title: 'Live Broadcast · Canal Cultura',
-          description: 'Continuous audiovisual stream and special cultural events.',
+          title: 'Live Signal',
+          description: 'Continuous audiovisual broadcast from Canal Cultura.',
           category: 'canal',
           accent: '#153684',
           badge: 'LIVE',
@@ -357,28 +373,44 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'cendis-catalogo',
-          title: 'CENDIS Sound Catalog',
-          description: 'Digital sound archive, productions, and national recordings.',
+          title: 'Catalog',
+          description: 'Digital sound archive, productions, and CENDIS recordings.',
           category: 'cendis',
           accent: '#D97706',
           badge: 'MUSIC',
           modalType: 'catalog',
         },
         {
+          id: 'conciertos',
+          title: 'Concerts',
+          description: 'Recitals, festivals, and live musical sessions.',
+          category: 'concerts',
+          accent: '#B12722',
+          modalType: 'concerts',
+        },
+        {
+          id: 'podcast',
+          title: 'Podcast',
+          description: 'Cultural episodes, interviews, and sound heritage.',
+          category: 'podcast',
+          accent: '#334155',
+          modalType: 'podcast',
+        },
+        {
+          id: 'noticias',
+          title: 'News',
+          description: 'Cultural updates, open calls, and institutional events.',
+          category: 'news',
+          accent: '#0F766E',
+          modalType: 'news',
+        },
+        {
           id: 'canal-programacion',
-          title: 'Schedule & Programming',
-          description: 'Cultural timetables, film series, and live concerts.',
+          title: 'Schedule',
+          description: 'Cultural timetables, film series, and programming.',
           category: 'canal',
           accent: '#0284C7',
           modalType: 'schedule',
-        },
-        {
-          id: 'ministerio-cultura',
-          title: 'Ministry of Culture Portal',
-          description: 'Institutional information, affiliated agencies, and open calls.',
-          category: 'institucional',
-          accent: '#153684',
-          modalType: 'about',
         },
       ],
     },
