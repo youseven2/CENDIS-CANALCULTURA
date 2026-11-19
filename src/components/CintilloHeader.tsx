@@ -34,57 +34,41 @@ export function CintilloHeader({
         <div className="flex-1 bg-[#C81D25]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2">
-        {/* Logos Institucionales clicables: CENDIS a la izquierda y Canal Cultura a la derecha */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="flex items-center gap-1.5 sm:gap-2 bg-[#CBD5E1]/80 border border-[#94A3B8]/70 rounded-xl px-1.5 sm:px-2 py-1 shrink-0 shadow-inner">
-            <button
-              type="button"
-              onClick={onGoHome}
-              title={`CENDIS - ${t.home}`}
-              aria-label={`CENDIS - ${t.home}`}
-              className="bg-white/95 rounded-lg px-1.5 py-0.5 border border-[#94A3B8]/50 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
-            >
-              <img
-                src="/logos/cendis.jpg"
-                alt="Centro Nacional del Disco - CENDIS"
-                className="h-5 sm:h-7 w-auto object-contain rounded"
-              />
-            </button>
-            <div className="h-5 sm:h-6 w-px bg-[#64748B]/60" />
-            <button
-              type="button"
-              onClick={onGoHome}
-              title={`Canal Cultura - ${t.home}`}
-              aria-label={`Canal Cultura - ${t.home}`}
-              className="bg-white/95 rounded-lg px-1.5 py-0.5 border border-[#94A3B8]/50 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
-            >
-              <img
-                src="/logos/cultura-venezuela.jpg"
-                alt="Canal Cultura Venezuela"
-                className="h-6 sm:h-8 w-auto object-contain rounded"
-              />
-            </button>
-          </div>
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 py-1.5 sm:py-2 flex flex-wrap md:flex-nowrap items-center justify-between gap-2">
+        {/* LADO IZQUIERDO: Logo CENDIS */}
+        <div className="flex items-center gap-2.5 order-1">
+          <button
+            type="button"
+            onClick={onGoHome}
+            title={`CENDIS - ${t.home}`}
+            aria-label={`CENDIS - ${t.home}`}
+            className="bg-white/95 rounded-xl px-2 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+          >
+            <img
+              src="/logos/cendis.jpg"
+              alt="Centro Nacional del Disco - CENDIS"
+              className="h-6 sm:h-8 w-auto object-contain rounded"
+            />
+          </button>
 
-          {device !== 'mobile' && (
+          {device === 'desktop' && (
             <button
               type="button"
               onClick={onGoHome}
-              className="hidden lg:flex flex-col leading-tight min-w-0 text-left hover:opacity-80 transition-opacity"
+              className="hidden xl:flex flex-col leading-tight text-left hover:opacity-80 transition-opacity"
             >
-              <span className="font-display font-bold text-sm text-[#0F172A] tracking-tight truncate">
+              <span className="font-display font-bold text-sm text-[#0F172A] tracking-tight">
                 CENDIS · Canal Cultura
               </span>
-              <span className="text-[11px] font-medium text-[#334155] truncate">
+              <span className="text-[11px] font-medium text-[#334155] truncate max-w-[210px]">
                 {t.ministryShort}
               </span>
             </button>
           )}
         </div>
 
-        {/* Controles del Cintillo: Buscar + Idioma + Home + Conócenos + Organigrama */}
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        {/* CENTRO: Buscar + Idioma + Home + Conócenos + Organigrama */}
+        <div className="flex items-center justify-center gap-1 sm:gap-2 order-3 md:order-2 w-full md:w-auto">
           <button
             type="button"
             onClick={onOpenSearch}
@@ -100,7 +84,7 @@ export function CintilloHeader({
             aria-label={t.languageLabel}
             className="inline-flex items-center rounded-xl bg-[#CBD5E1]/80 p-0.5 border border-[#94A3B8]/60"
           >
-            <Languages className="w-3.5 h-3.5 text-[#153684] ml-1.5 mr-1 hidden md:block" />
+            <Languages className="w-3.5 h-3.5 text-[#153684] ml-1.5 mr-1 hidden lg:block" />
             <button
               type="button"
               onClick={() => onToggleLanguage('es')}
@@ -132,7 +116,7 @@ export function CintilloHeader({
               className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-[#153684] hover:bg-[#0F2761] active:scale-[0.98] text-white font-display font-semibold text-[11px] sm:text-xs shadow-sm shadow-[#153684]/25 transition-all"
             >
               <Home className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{t.home}</span>
+              <span>{t.home}</span>
             </button>
 
             <button
@@ -155,6 +139,23 @@ export function CintilloHeader({
               <span>{t.orgChart}</span>
             </button>
           </nav>
+        </div>
+
+        {/* LADO DERECHO: Logo Canal Cultura */}
+        <div className="flex items-center order-2 md:order-3">
+          <button
+            type="button"
+            onClick={onGoHome}
+            title={`Canal Cultura - ${t.home}`}
+            aria-label={`Canal Cultura - ${t.home}`}
+            className="bg-white/95 rounded-xl px-2 py-1 border border-[#94A3B8]/70 shadow-sm focus:outline-none hover:opacity-85 active:scale-95 transition-all"
+          >
+            <img
+              src="/logos/cultura-venezuela.jpg"
+              alt="Canal Cultura Venezuela"
+              className="h-7 sm:h-9 w-auto object-contain rounded"
+            />
+          </button>
         </div>
       </div>
     </header>
