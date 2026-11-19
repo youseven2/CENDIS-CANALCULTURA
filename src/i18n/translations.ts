@@ -73,18 +73,13 @@ export interface TranslationBundle {
   modal: {
     adaptedTo: string;
     close: string;
-    summaryWorks: string;
-    summaryHours: string;
-    summaryCoverage: string;
-    coverageValue: string;
-    tableHeaders: {
-      code: string;
-      area: string;
-      indicator: string;
-      period: string;
-      result: string;
-      status: string;
-    };
+    totalVisitsLabel: string;
+    viewingTimeLabel: string;
+    avgTimeLabel: string;
+    detectedCountryLabel: string;
+    countriesTitle: string;
+    mostViewedTitle: string;
+    viewsUnit: string;
     moduleReadyTitle: string;
     moduleReadyBody: string;
     reports: TranslatedReportRow[];
@@ -153,13 +148,13 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'slide-reportes',
-          badge: 'Transparencia y Gestión',
-          title: 'Reportes e Indicadores Institucionales',
+          badge: 'Métricas en Vivo',
+          title: 'Estadísticas del Portal Cultural',
           subtitle:
-            'Consulta los avances de producción, transmisiones y alcance cultural adaptados automáticamente a tu pantalla.',
+            'Consulta el tiempo de visualización, total de visitas, países de origen y el contenido más visto en tiempo real.',
           accentColor: 'red',
-          tag: 'Gestión Pública',
-          actionLabel: 'Abrir Reportes',
+          tag: 'Analítica Institucional',
+          actionLabel: 'Ver Estadísticas',
           targetLinkId: 'reportes-gestion',
         },
       ],
@@ -197,11 +192,11 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'reportes-gestion',
-          title: 'Reportes Institucionales',
-          description: 'Métricas de gestión CENDIS + Canal Cultura por pantalla.',
+          title: 'Estadísticas',
+          description: 'Tiempo de visualización, visitas, países y contenido más visto.',
           category: 'reportes',
           accent: '#B12722',
-          badge: 'REPORTES',
+          badge: 'MÉTRICAS',
           modalType: 'reports',
         },
         {
@@ -229,18 +224,13 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
     modal: {
       adaptedTo: 'Vista adaptada a',
       close: 'Cerrar ventana',
-      summaryWorks: 'Obras CENDIS',
-      summaryHours: 'Horas Canal Cultura',
-      summaryCoverage: 'Cobertura Nacional',
-      coverageValue: '24 Estados',
-      tableHeaders: {
-        code: 'Código',
-        area: 'Ente / Área',
-        indicator: 'Indicador',
-        period: 'Periodo',
-        result: 'Resultado',
-        status: 'Estado',
-      },
+      totalVisitsLabel: 'Visitas Totales',
+      viewingTimeLabel: 'Tu Tiempo en Página',
+      avgTimeLabel: 'Tiempo Promedio',
+      detectedCountryLabel: 'Tu Región Detectada',
+      countriesTitle: 'Visitas por País',
+      mostViewedTitle: 'Contenido Más Visto',
+      viewsUnit: 'vistas',
       moduleReadyTitle: 'Módulo listo para enlazar:',
       moduleReadyBody:
         'Puedes conectar este acceso directo a tu URL oficial de transmisión, catálogo discográfico o sistema interno en',
@@ -349,13 +339,13 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'slide-reportes',
-          badge: 'Transparency & Management',
-          title: 'Institutional Reports & Metrics',
+          badge: 'Live Metrics',
+          title: 'Cultural Portal Statistics',
           subtitle:
-            'Review production progress, broadcasts, and cultural reach automatically adapted to your screen.',
+            'Track viewing time, total visits, visitor countries, and most viewed content in real time.',
           accentColor: 'red',
-          tag: 'Public Management',
-          actionLabel: 'Open Reports',
+          tag: 'Institutional Analytics',
+          actionLabel: 'View Statistics',
           targetLinkId: 'reportes-gestion',
         },
       ],
@@ -393,11 +383,11 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
         },
         {
           id: 'reportes-gestion',
-          title: 'Institutional Reports',
-          description: 'CENDIS + Canal Cultura management metrics by device.',
+          title: 'Statistics',
+          description: 'Viewing time, total visits, countries, and most viewed content.',
           category: 'reportes',
           accent: '#B12722',
-          badge: 'REPORTS',
+          badge: 'METRICS',
           modalType: 'reports',
         },
         {
@@ -425,18 +415,13 @@ export const TRANSLATIONS: Record<Language, TranslationBundle> = {
     modal: {
       adaptedTo: 'View adapted to',
       close: 'Close window',
-      summaryWorks: 'CENDIS Works',
-      summaryHours: 'Canal Cultura Hours',
-      summaryCoverage: 'National Reach',
-      coverageValue: '24 States',
-      tableHeaders: {
-        code: 'Code',
-        area: 'Agency / Area',
-        indicator: 'Indicator',
-        period: 'Period',
-        result: 'Result',
-        status: 'Status',
-      },
+      totalVisitsLabel: 'Total Visits',
+      viewingTimeLabel: 'Your Viewing Time',
+      avgTimeLabel: 'Average Time',
+      detectedCountryLabel: 'Detected Region',
+      countriesTitle: 'Visits by Country',
+      mostViewedTitle: 'Most Viewed Content',
+      viewsUnit: 'views',
       moduleReadyTitle: 'Module ready to link:',
       moduleReadyBody:
         'You can connect this shortcut to your official stream URL, music catalog, or internal system in',

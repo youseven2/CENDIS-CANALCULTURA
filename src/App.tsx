@@ -10,10 +10,12 @@ import { ReportModal } from './components/ReportModal';
 import { SearchOverlay } from './components/SearchOverlay';
 import { SocialsModal } from './components/SocialsModal';
 import { useDeviceType } from './hooks/useDeviceType';
+import { usePortalStats } from './hooks/usePortalStats';
 import { Language, TRANSLATIONS, TranslatedLink } from './i18n/translations';
 
 export function App() {
   const deviceInfo = useDeviceType();
+  const { stats, trackContentView } = usePortalStats();
   const [language, setLanguage] = useState<Language>('es');
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
@@ -43,6 +45,7 @@ export function App() {
   };
 
   const handleOpenLink = (link: TranslatedLink) => {
+    trackContentView(link.id);
     if (link.externalUrl) {
       window.open(link.externalUrl, '_blank', 'noopener,noreferrer');
       return;
@@ -64,8 +67,14 @@ export function App() {
         language={language}
         onToggleLanguage={setLanguage}
         onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenConocenos={() => setIsConocenosOpen(true)}
-        onOpenOrganigrama={() => setIsOrganigramaOpen(true)}
+        onOpenConocenos={() => {
+          trackContentView('conocenos');
+          setIsConocenosOpen(true);
+        }}
+        onOpenOrganigrama={() => {
+          trackContentView('organigrama');
+          setIsOrganigramaOpen(true);
+        }}
         onGoHome={handleGoHome}
         t={t.header}
       />
@@ -157,11 +166,13 @@ export function App() {
         device={deviceInfo.device}
       />
 
-      {/* Modal adaptativo para enlaces y reportes */}
+      {/* Modal adaptativo para enlaces y estadísticas */}
       <ReportModal
         activeLink={selectedLink}
         deviceInfo={deviceInfo}
         deviceLabel={deviceLabel}
+        language={language}
+        stats={stats}
         t={t.modal}
         onClose={() => setSelectedLinkId(null)}
       />

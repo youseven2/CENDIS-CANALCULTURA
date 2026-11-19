@@ -1,20 +1,27 @@
 import {
   BarChart3,
-  CheckCircle2,
+  Clock,
   Disc3,
+  Eye,
+  Flame,
+  Globe2,
   Monitor,
   Radio,
   Smartphone,
   Tablet,
+  Timer,
   X,
 } from 'lucide-react';
 import { DeviceInfo } from '../hooks/useDeviceType';
-import { TranslatedLink, TranslationBundle } from '../i18n/translations';
+import { PortalStatsState, formatDuration } from '../hooks/usePortalStats';
+import { Language, TranslatedLink, TranslationBundle } from '../i18n/translations';
 
 interface ReportModalProps {
   activeLink: TranslatedLink | null;
   deviceInfo: DeviceInfo;
   deviceLabel: string;
+  language: Language;
+  stats: PortalStatsState;
   t: TranslationBundle['modal'];
   onClose: () => void;
 }
@@ -23,6 +30,8 @@ export function ReportModal({
   activeLink,
   deviceInfo,
   deviceLabel,
+  language,
+  stats,
   t,
   onClose,
 }: ReportModalProps) {
@@ -32,12 +41,14 @@ export function ReportModal({
   const DeviceIcon =
     device === 'mobile' ? Smartphone : device === 'tablet' ? Tablet : Monitor;
 
+  const maxContentViews = stats.topContent[0]?.views || 1;
+
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-[#111827]/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-[#0F172A]/65 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -45,7 +56,7 @@ export function ReportModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabecera del Modal */}
-        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#94A3B8]/50 bg-[#CBD5E1]/80">
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#94A3B8]/50 bg-[#CBD5E1]/85">
           <div className="flex items-center gap-3 min-w-0">
             <span
               className="w-3 h-8 rounded-full shrink-0"
@@ -81,82 +92,131 @@ export function ReportModal({
         <div className="p-4 sm:p-6 overflow-y-auto custom-scroll space-y-4">
           {activeLink.modalType === 'reports' ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#153684]/10 border border-[#153684]/25">
-                  <p className="text-xs font-semibold text-[#153684]">{t.summaryWorks}</p>
-                  <p className="font-display font-extrabold text-2xl text-[#0F172A] mt-1">148</p>
+              {/* 4 KPIs Principales: Visitas, Tiempo en página, Promedio, Región */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+                <div className="p-3.5 rounded-2xl bg-[#153684] text-white shadow-sm">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[#CBD5E1]">
+                    <Eye className="w-3.5 h-3.5 text-[#F9C80E]" />
+                    <span>{t.totalVisitsLabel}</span>
+                  </div>
+                  <p className="font-display font-extrabold text-xl sm:text-2xl mt-1">
+                    {stats.totalVisits.toLocaleString()}
+                  </p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#334155]/10 border border-[#334155]/25">
-                  <p className="text-xs font-semibold text-[#334155]">{t.summaryHours}</p>
-                  <p className="font-display font-extrabold text-2xl text-[#0F172A] mt-1">1,920</p>
+
+                <div className="p-3.5 rounded-2xl bg-[#CBD5E1] border border-[#94A3B8] text-[#0F172A] shadow-sm">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[#153684]">
+                    <Timer className="w-3.5 h-3.5" />
+                    <span>{t.viewingTimeLabel}</span>
+                  </div>
+                  <p className="font-display font-extrabold text-xl sm:text-2xl mt-1 text-[#B12722]">
+                    {formatDuration(stats.sessionSeconds)}
+                  </p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#CBD5E1] border border-[#94A3B8]">
-                  <p className="text-xs font-semibold text-[#1E293B]">{t.summaryCoverage}</p>
-                  <p className="font-display font-extrabold text-2xl text-[#0F172A] mt-1">
-                    {t.coverageValue}
+
+                <div className="p-3.5 rounded-2xl bg-[#CBD5E1] border border-[#94A3B8] text-[#0F172A] shadow-sm">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[#334155]">
+                    <Clock className="w-3.5 h-3.5 text-[#153684]" />
+                    <span>{t.avgTimeLabel}</span>
+                  </div>
+                  <p className="font-display font-extrabold text-xl sm:text-2xl mt-1">
+                    {stats.avgViewTime}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-[#334155] text-white shadow-sm">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[#CBD5E1]">
+                    <Globe2 className="w-3.5 h-3.5 text-[#F9C80E]" />
+                    <span>{t.detectedCountryLabel}</span>
+                  </div>
+                  <p className="font-display font-bold text-sm sm:text-base mt-1.5 truncate text-[#F9C80E]">
+                    {stats.currentVisitorRegion}
                   </p>
                 </div>
               </div>
 
-              {device === 'mobile' ? (
-                <div className="space-y-2.5">
-                  {t.reports.map((row) => (
-                    <div
-                      key={row.id}
-                      className="p-3.5 rounded-xl border border-gray-200 bg-[#F8F9FB] space-y-1.5"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-bold text-[#153684]">{row.area}</span>
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F9C80E]/30 text-[#111827]">
-                          {row.estado}
-                        </span>
-                      </div>
-                      <p className="font-display font-bold text-sm text-[#111827]">
-                        {row.indicador}
-                      </p>
-                      <div className="flex items-center justify-between text-xs text-gray-600 pt-1 border-t border-gray-200/70">
-                        <span>{row.periodo}</span>
-                        <strong className="text-[#C81D25]">{row.valor}</strong>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="overflow-x-auto rounded-2xl border border-gray-200">
-                  <table className="w-full text-left border-collapse text-sm">
-                    <thead>
-                      <tr className="bg-[#153684] text-white font-display">
-                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.code}</th>
-                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.area}</th>
-                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.indicator}</th>
-                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.period}</th>
-                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.result}</th>
-                        <th className="py-3 px-4 font-semibold">{t.tableHeaders.status}</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 bg-white">
-                      {t.reports.map((row) => (
-                        <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                          <td className="py-3 px-4 font-mono text-xs text-gray-500">{row.id}</td>
-                          <td className="py-3 px-4 font-semibold text-[#153684]">{row.area}</td>
-                          <td className="py-3 px-4 text-[#111827]">{row.indicador}</td>
-                          <td className="py-3 px-4 text-gray-600">{row.periodo}</td>
-                          <td className="py-3 px-4 font-bold text-[#C81D25]">{row.valor}</td>
-                          <td className="py-3 px-4">
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#F9C80E]/25 text-[#111827]">
-                              <CheckCircle2 className="w-3 h-3 text-[#153684]" />
-                              {row.estado}
+              {/* Desglose por País y Contenido Más Visto */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Visitas por País */}
+                <div className="rounded-2xl bg-[#F1F5F9]/90 border border-[#94A3B8]/60 p-4 space-y-3 shadow-sm">
+                  <div className="flex items-center gap-2 font-display font-bold text-sm sm:text-base text-[#0F172A]">
+                    <Globe2 className="w-4 h-4 text-[#153684]" />
+                    <h4>{t.countriesTitle}</h4>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {stats.countries.map((c) => {
+                      const name = language === 'es' ? c.countryEs : c.countryEn;
+                      return (
+                        <div key={c.code} className="space-y-1">
+                          <div className="flex items-center justify-between text-xs font-semibold text-[#1E293B]">
+                            <span>
+                              {name}{' '}
+                              <span className="text-[10px] font-mono text-[#64748B]">
+                                ({c.code})
+                              </span>
                             </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                            <span>
+                              {c.visits.toLocaleString()} ·{' '}
+                              <strong className="text-[#153684]">{c.percent}%</strong>
+                            </span>
+                          </div>
+                          <div className="h-2 w-full rounded-full bg-[#CBD5E1] overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-[#153684] to-[#1D4ED8]"
+                              style={{ width: `${c.percent}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              )}
+
+                {/* Contenido Más Visto */}
+                <div className="rounded-2xl bg-[#F1F5F9]/90 border border-[#94A3B8]/60 p-4 space-y-3 shadow-sm">
+                  <div className="flex items-center gap-2 font-display font-bold text-sm sm:text-base text-[#0F172A]">
+                    <Flame className="w-4 h-4 text-[#B12722]" />
+                    <h4>{t.mostViewedTitle}</h4>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {stats.topContent.map((item, idx) => {
+                      const title = language === 'es' ? item.titleEs : item.titleEn;
+                      const pct = Math.round((item.views / maxContentViews) * 100);
+                      return (
+                        <div
+                          key={item.id}
+                          className="p-2.5 rounded-xl bg-[#CBD5E1]/55 border border-[#94A3B8]/40 space-y-1.5"
+                        >
+                          <div className="flex items-center justify-between gap-2 text-xs">
+                            <span className="font-display font-bold text-[#0F172A] truncate">
+                              #{idx + 1} {title}
+                            </span>
+                            <span className="shrink-0 font-bold text-[#B12722]">
+                              {item.views.toLocaleString()} {t.viewsUnit}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="h-1.5 flex-1 rounded-full bg-[#E2E8F0] overflow-hidden">
+                              <div
+                                className="h-full rounded-full bg-gradient-to-r from-[#B12722] to-[#F9C80E]"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-medium text-[#475569] shrink-0">
+                              {item.avgTime}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </>
           ) : (
-            <div className="rounded-2xl border border-gray-200 bg-[#F8F9FB] p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="rounded-2xl border border-[#94A3B8]/60 bg-[#F1F5F9]/90 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-sm"
                 style={{ backgroundColor: activeLink.accent }}
@@ -170,12 +230,12 @@ export function ReportModal({
                 )}
               </div>
               <div className="space-y-1.5">
-                <h4 className="font-display font-bold text-base text-[#111827]">
+                <h4 className="font-display font-bold text-base text-[#0F172A]">
                   {t.moduleReadyTitle} {activeLink.title}
                 </h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-[#334155] leading-relaxed">
                   {activeLink.description} {t.moduleReadyBody}{' '}
-                  <code className="px-1.5 py-0.5 rounded bg-gray-200 text-xs font-mono">
+                  <code className="px-1.5 py-0.5 rounded bg-[#CBD5E1] text-xs font-mono">
                     src/i18n/translations.ts
                   </code>
                   .
