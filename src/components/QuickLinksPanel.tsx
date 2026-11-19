@@ -49,7 +49,7 @@ export function QuickLinksPanel({ t, onOpenLink, device }: QuickLinksPanelProps)
       </div>
 
       <div
-        className={`grid gap-2 flex-1 content-center ${
+        className={`grid gap-1.5 sm:gap-2 flex-1 content-center ${
           device === 'mobile'
             ? 'grid-cols-2'
             : device === 'tablet'
@@ -57,14 +57,18 @@ export function QuickLinksPanel({ t, onOpenLink, device }: QuickLinksPanelProps)
               : 'grid-cols-1'
         }`}
       >
-        {t.links.map((link) => {
+        {t.links.map((link, idx) => {
           const Icon = getLinkIcon(link.category);
+          const isLastOddMobile =
+            device === 'mobile' && t.links.length % 2 === 1 && idx === t.links.length - 1;
           return (
             <button
               key={link.id}
               type="button"
               onClick={() => onOpenLink(link)}
-              className="group w-full text-left flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl border border-[#94A3B8]/50 bg-[#F1F5F9]/75 hover:bg-[#F8FAFC] hover:border-[#153684]/50 hover:shadow-md transition-all active:scale-[0.99]"
+              className={`group w-full text-left flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-xl border border-[#94A3B8]/50 bg-[#F1F5F9]/75 hover:bg-[#F8FAFC] hover:border-[#153684]/50 hover:shadow-md transition-all active:scale-[0.99] ${
+                isLastOddMobile ? 'col-span-2' : ''
+              }`}
             >
               <div
                 className="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center text-white shadow-sm"

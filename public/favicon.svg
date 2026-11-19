@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="flag-clip">
+      <rect width="64" height="64" rx="14" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#flag-clip)">
+    <!-- Franja Amarilla -->
+    <rect width="64" height="21.5" y="0" fill="#F9C80E" />
+    <!-- Franja Azul -->
+    <rect width="64" height="21.5" y="21.5" fill="#153684" />
+    <!-- Franja Roja -->
+    <rect width="64" height="21" y="43" fill="#C81D25" />
+    <!-- Arco de 8 estrellas blancas -->
+    <g fill="#FFFFFF">
+      <circle cx="17.5" cy="36.2" r="1.7" />
+      <circle cx="20.8" cy="32.1" r="1.7" />
+      <circle cx="25.0" cy="29.0" r="1.7" />
+      <circle cx="29.7" cy="27.3" r="1.7" />
+      <circle cx="34.3" cy="27.3" r="1.7" />
+      <circle cx="39.0" cy="29.0" r="1.7" />
+      <circle cx="43.2" cy="32.1" r="1.7" />
+      <circle cx="46.5" cy="36.2" r="1.7" />
+    </g>
+  </g>
+</svg>
