@@ -9,6 +9,7 @@ import { QuickLinksPanel } from './components/QuickLinksPanel';
 import { ReportModal } from './components/ReportModal';
 import { SearchOverlay } from './components/SearchOverlay';
 import { SocialsModal } from './components/SocialsModal';
+import { StatsLoginModal } from './components/StatsLoginModal';
 import { useDeviceType } from './hooks/useDeviceType';
 import { usePortalStats } from './hooks/usePortalStats';
 import { Language, TRANSLATIONS, TranslatedLink } from './i18n/translations';
@@ -23,11 +24,25 @@ export function App() {
   const [isConocenosOpen, setIsConocenosOpen] = useState(false);
   const [isOrganigramaOpen, setIsOrganigramaOpen] = useState(false);
   const [isSocialsOpen, setIsSocialsOpen] = useState(false);
+  const [isStatsLoginOpen, setIsStatsLoginOpen] = useState(false);
+  const [isStatsOpen, setIsStatsOpen] = useState(false);
 
   const t = TRANSLATIONS[language];
   const deviceLabel = t.header.deviceLabels[deviceInfo.device];
-  const selectedLink =
-    selectedLinkId !== null
+  const statsLink: TranslatedLink = {
+    id: 'estadisticas-admin',
+    title: language === 'es' ? 'Estadísticas del Portal' : 'Portal Statistics',
+    description:
+      language === 'es'
+        ? 'Tiempo de visualización, visitas, países y contenido más visto.'
+        : 'Viewing time, total visits, countries, and most viewed content.',
+    category: 'reportes',
+    accent: '#B12722',
+    modalType: 'reports',
+  };
+  const selectedLink = isStatsOpen
+    ? statsLink
+    : selectedLinkId !== null
       ? t.linksPanel.links.find((l) => l.id === selectedLinkId) ?? null
       : null;
 
@@ -41,6 +56,8 @@ export function App() {
     setIsConocenosOpen(false);
     setIsOrganigramaOpen(false);
     setIsSocialsOpen(false);
+    setIsStatsLoginOpen(false);
+    setIsStatsOpen(false);
     setActiveSlide(0);
   };
 
@@ -125,7 +142,7 @@ export function App() {
         deviceInfo={deviceInfo}
         t={t.footer}
         deviceLabel={deviceLabel}
-        onGoHome={handleGoHome}
+        onOpenStatsLogin={() => setIsStatsLoginOpen(true)}
       />
 
       {/* Botón Flotante Vertical de Redes Sociales */}
@@ -166,6 +183,17 @@ export function App() {
         device={deviceInfo.device}
       />
 
+      {/* Login oculto para estadísticas en logo Ministerio de Cultura */}
+      <StatsLoginModal
+        isOpen={isStatsLoginOpen}
+        onClose={() => setIsStatsLoginOpen(false)}
+        onSuccess={() => {
+          setIsStatsLoginOpen(false);
+          setIsStatsOpen(true);
+        }}
+        language={language}
+      />
+
       {/* Modal adaptativo para enlaces y estadísticas */}
       <ReportModal
         activeLink={selectedLink}
@@ -174,7 +202,10 @@ export function App() {
         language={language}
         stats={stats}
         t={t.modal}
-        onClose={() => setSelectedLinkId(null)}
+        onClose={() => {
+          setSelectedLinkId(null);
+          setIsStatsOpen(false);
+        }}
       />
     </div>
   );

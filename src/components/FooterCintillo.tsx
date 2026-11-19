@@ -6,14 +6,14 @@ interface FooterCintilloProps {
   deviceInfo: DeviceInfo;
   t: TranslationBundle['footer'];
   deviceLabel: string;
-  onGoHome: () => void;
+  onOpenStatsLogin: () => void;
 }
 
 export function FooterCintillo({
   deviceInfo,
   t,
   deviceLabel,
-  onGoHome,
+  onOpenStatsLogin,
 }: FooterCintilloProps) {
   const DeviceIcon =
     deviceInfo.device === 'mobile'
@@ -33,11 +33,10 @@ export function FooterCintillo({
 
       <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-4 text-[10px] sm:text-xs">
         <div className="flex items-center gap-2.5 min-w-0">
-          {/* Logo oficial del Ministerio de Cultura en el cintillo (tocar para ir a Home) */}
+          {/* Logo oficial del Ministerio de Cultura en el cintillo (acceso administrativo oculto) */}
           <button
             type="button"
-            onClick={onGoHome}
-            title="Home"
+            onClick={onOpenStatsLogin}
             aria-label={t.ministryName}
             className="shrink-0 bg-white/95 border border-[#F9C80E]/60 rounded-lg px-2 py-0.5 shadow-sm hover:opacity-90 active:scale-95 transition-all"
           >

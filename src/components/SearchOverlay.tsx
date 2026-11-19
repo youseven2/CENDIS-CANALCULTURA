@@ -62,16 +62,7 @@ export function SearchOverlay({
       link: l,
     }));
 
-    const reportsLink = t.linksPanel.links.find((l) => l.modalType === 'reports');
-    const reports: SearchResult[] = t.modal.reports.map((r) => ({
-      id: `r-${r.id}`,
-      type: 'report',
-      title: `${r.area} · ${r.indicador}`,
-      subtitle: `${r.periodo} — ${r.valor} (${r.estado})`,
-      link: reportsLink,
-    }));
-
-    return [...links, ...slides, ...reports];
+    return [...links, ...slides];
   }, [t]);
 
   const filtered = useMemo(() => {
