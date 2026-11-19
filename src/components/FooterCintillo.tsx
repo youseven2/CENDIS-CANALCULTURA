@@ -24,27 +24,27 @@ export function FooterCintillo({
 
   return (
     <footer className="shrink-0 w-full bg-gradient-to-r from-[#1E293B] via-[#153684] to-[#1E293B] text-[#E2E8F0] z-30 shadow-inner border-t border-[#94A3B8]/40">
-      {/* Línea metálica plateada con acento azul y dorado */}
+      {/* Línea tricolor institucional */}
       <div className="h-1 w-full flex">
-        <div className="flex-1 bg-[#94A3B8]" />
+        <div className="flex-1 bg-[#F9C80E]" />
         <div className="flex-1 bg-[#153684]" />
-        <div className="flex-1 bg-[#CBD5E1]" />
+        <div className="flex-1 bg-[#C81D25]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-4 text-[10px] sm:text-xs">
         <div className="flex items-center gap-2.5 min-w-0">
-          {/* Logo del Ministerio de Cultura en el cintillo (tocar para ir a Home) */}
+          {/* Logo oficial del Ministerio de Cultura en el cintillo (tocar para ir a Home) */}
           <button
             type="button"
             onClick={onGoHome}
             title="Home"
             aria-label={t.ministryName}
-            className="shrink-0 bg-[#E2E8F0] border border-[#94A3B8]/70 rounded-lg px-1.5 py-0.5 shadow-sm hover:opacity-90 active:scale-95 transition-all"
+            className="shrink-0 bg-white/95 border border-[#F9C80E]/60 rounded-lg px-2 py-0.5 shadow-sm hover:opacity-90 active:scale-95 transition-all"
           >
             <img
-              src="/logos/cultura-venezuela.jpg"
+              src="/logos/ministerio-cultura.jpg"
               alt={t.ministryName}
-              className="h-6 sm:h-7 w-auto object-contain rounded"
+              className="h-7 sm:h-8 w-auto object-contain rounded"
             />
           </button>
 

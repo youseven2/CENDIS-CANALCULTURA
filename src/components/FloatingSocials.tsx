@@ -31,9 +31,9 @@ function SocialSvg({ id }: { id: SocialLink['id'] }) {
 
 const FLOAT_STYLES: Record<SocialLink['id'], string> = {
   instagram:
-    'bg-gradient-to-tr from-[#334155] via-[#475569] to-[#64748B] text-white shadow-slate-700/30',
-  facebook: 'bg-[#153684] text-white shadow-[#153684]/30',
-  tiktok: 'bg-[#0F172A] text-[#E2E8F0] shadow-slate-900/30',
+    'bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white shadow-[#DD2A7B]/40',
+  facebook: 'bg-[#1877F2] text-white shadow-[#1877F2]/40',
+  tiktok: 'bg-[#010101] text-white ring-2 ring-[#25F4EE]/60 shadow-[#FE2C55]/30',
 };
 
 export function FloatingSocials({ socials, device, ariaLabel }: FloatingSocialsProps) {

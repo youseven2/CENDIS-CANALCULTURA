@@ -27,11 +27,11 @@ export function CintilloHeader({
 
   return (
     <header className="w-full shrink-0 bg-gradient-to-r from-[#DCE2EA] via-[#E8ECF2] to-[#DCE2EA] border-b border-[#94A3B8]/50 shadow-sm z-30">
-      {/* Cintillo metálico superior plateado y azul */}
+      {/* Cintillo metálico superior con acento tricolor */}
       <div className="h-1.5 w-full flex">
-        <div className="flex-1 bg-[#94A3B8]" />
+        <div className="flex-1 bg-[#F9C80E]" />
         <div className="flex-1 bg-[#153684]" />
-        <div className="flex-1 bg-[#64748B]" />
+        <div className="flex-1 bg-[#C81D25]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2">

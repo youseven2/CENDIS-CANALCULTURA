@@ -23,28 +23,28 @@ const ACCENT_STYLES: Record<
   }
 > = {
   red: {
-    bg: 'from-[#334155] via-[#475569] to-[#1E293B]',
-    badgeBg: 'bg-[#CBD5E1]',
+    bg: 'from-[#1E293B] via-[#153684] to-[#0F2761]',
+    badgeBg: 'bg-[#F9C80E]',
     badgeText: 'text-[#0F172A]',
-    buttonBg: 'bg-[#E2E8F0] text-[#0F172A] hover:bg-[#F9C80E] hover:text-[#0F172A]',
-    decorCircle1: 'bg-[#CBD5E1]/20',
-    decorCircle2: 'bg-[#153684]/40',
+    buttonBg: 'bg-[#F9C80E] text-[#0F172A] hover:bg-white hover:text-[#153684]',
+    decorCircle1: 'bg-[#F9C80E]/25',
+    decorCircle2: 'bg-[#C81D25]/30',
   },
   blue: {
-    bg: 'from-[#0F2761] via-[#153684] to-[#1E293B]',
-    badgeBg: 'bg-[#CBD5E1]',
+    bg: 'from-[#153684] via-[#1D4ED8] to-[#1E293B]',
+    badgeBg: 'bg-[#F9C80E]',
     badgeText: 'text-[#0F172A]',
     buttonBg: 'bg-[#CBD5E1] text-[#0F172A] hover:bg-[#F9C80E] hover:text-[#0F172A]',
-    decorCircle1: 'bg-[#94A3B8]/25',
-    decorCircle2: 'bg-[#CBD5E1]/15',
+    decorCircle1: 'bg-[#F9C80E]/25',
+    decorCircle2: 'bg-[#CBD5E1]/20',
   },
   yellow: {
     bg: 'from-[#CBD5E1] via-[#E2E8F0] to-[#94A3B8]',
-    badgeBg: 'bg-[#153684]',
+    badgeBg: 'bg-[#C81D25]',
     badgeText: 'text-white',
-    buttonBg: 'bg-[#153684] text-white hover:bg-[#334155]',
-    decorCircle1: 'bg-[#153684]/15',
-    decorCircle2: 'bg-[#F9C80E]/25',
+    buttonBg: 'bg-[#153684] text-white hover:bg-[#C81D25]',
+    decorCircle1: 'bg-[#F9C80E]/35',
+    decorCircle2: 'bg-[#153684]/20',
   },
 };
 

@@ -42,8 +42,8 @@ export function QuickLinksPanel({ t, onOpenLink, device }: QuickLinksPanelProps)
           </h2>
           <p className="text-[11px] sm:text-xs text-[#334155]">{t.subtitle}</p>
         </div>
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#153684]/15 border border-[#153684]/20 text-[#153684] text-[10px] sm:text-[11px] font-bold">
-          <CalendarDays className="w-3 h-3" />
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#153684] to-[#1D4ED8] text-white shadow-sm text-[10px] sm:text-[11px] font-bold">
+          <CalendarDays className="w-3 h-3 text-[#F9C80E]" />
           {t.portalBadge}
         </span>
       </div>
