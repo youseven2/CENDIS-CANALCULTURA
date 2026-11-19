@@ -8,7 +8,7 @@ import { OrganigramaModal } from './components/OrganigramaModal';
 import { QuickLinksPanel } from './components/QuickLinksPanel';
 import { ReportModal } from './components/ReportModal';
 import { SearchOverlay } from './components/SearchOverlay';
-import { SOCIAL_LINKS } from './data/portalData';
+import { SocialsModal } from './components/SocialsModal';
 import { useDeviceType } from './hooks/useDeviceType';
 import { Language, TRANSLATIONS, TranslatedLink } from './i18n/translations';
 
@@ -20,6 +20,7 @@ export function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isConocenosOpen, setIsConocenosOpen] = useState(false);
   const [isOrganigramaOpen, setIsOrganigramaOpen] = useState(false);
+  const [isSocialsOpen, setIsSocialsOpen] = useState(false);
 
   const t = TRANSLATIONS[language];
   const deviceLabel = t.header.deviceLabels[deviceInfo.device];
@@ -37,6 +38,7 @@ export function App() {
     setIsSearchOpen(false);
     setIsConocenosOpen(false);
     setIsOrganigramaOpen(false);
+    setIsSocialsOpen(false);
     setActiveSlide(0);
   };
 
@@ -118,11 +120,18 @@ export function App() {
         onGoHome={handleGoHome}
       />
 
-      {/* Botones Flotantes de Redes Sociales: Instagram, Facebook, TikTok */}
+      {/* Botón Flotante Vertical de Redes Sociales */}
       <FloatingSocials
-        socials={SOCIAL_LINKS}
         device={deviceInfo.device}
-        ariaLabel={t.socials.ariaLabel}
+        language={language}
+        onOpenSocials={() => setIsSocialsOpen(true)}
+      />
+
+      {/* Ventana de Redes Sociales: Canal Cultura y CENDIS */}
+      <SocialsModal
+        isOpen={isSocialsOpen}
+        onClose={() => setIsSocialsOpen(false)}
+        language={language}
       />
 
       {/* Buscador dentro de la misma página */}
