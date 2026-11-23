@@ -50,13 +50,15 @@ export const CENDIS_ALLIES: AllyItem[] = [
   {
     id: 'danza',
     shortName: 'DANZA',
-    fullNameEs: 'Centro Nacional de Danza',
-    fullNameEn: 'National Dance Center',
+    fullNameEs: 'Fundación Compañía Nacional de Danza',
+    fullNameEn: 'National Dance Company Foundation',
     descEs:
       'Ente adscrito al Ministerio del Poder Popular para la Cultura dedicado al fomento y proyección de la danza nacional.',
     descEn:
       "Agency attached to the Ministry of People's Power for Culture dedicated to promoting national dance.",
     accent: '#D97706',
+    logoUrl: '/logos/compania-danza.jpg',
+    externalUrl: 'https://www.instagram.com/cndanzave_?avpt=M3BkeG8yempubnAw',
   },
   {
     id: 'musica',
