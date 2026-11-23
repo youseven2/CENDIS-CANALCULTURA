@@ -1,4 +1,4 @@
-import { Building2, Handshake, X } from 'lucide-react';
+import { Building2, ExternalLink, Handshake, X } from 'lucide-react';
 import { Language } from '../i18n/translations';
 import { AllyItem, CENDIS_ALLIES } from './AliadosStrip';
 
@@ -63,12 +63,22 @@ export function AliadosModal({ selectedAlly, onClose, language }: AliadosModalPr
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0"
-                    style={{ backgroundColor: ally.accent }}
-                  >
-                    <Building2 className="w-4 h-4" />
-                  </div>
+                  {ally.logoUrl ? (
+                    <div className="bg-white rounded-lg p-1 border border-[#94A3B8]/50 shrink-0 shadow-sm">
+                      <img
+                        src={ally.logoUrl}
+                        alt={ally.shortName}
+                        className="h-7 w-auto object-contain rounded"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0"
+                      style={{ backgroundColor: ally.accent }}
+                    >
+                      <Building2 className="w-4 h-4" />
+                    </div>
+                  )}
                   <div className="min-w-0">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
                       {ally.shortName}
@@ -81,6 +91,17 @@ export function AliadosModal({ selectedAlly, onClose, language }: AliadosModalPr
                 <p className="mt-2 text-xs text-[#334155] leading-relaxed">
                   {isEs ? ally.descEs : ally.descEn}
                 </p>
+                {ally.externalUrl && (
+                  <a
+                    href={ally.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#153684] hover:text-[#B12722]"
+                  >
+                    <span>{isEs ? 'Visitar enlace oficial' : 'Visit official link'}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
               </div>
             );
           })}

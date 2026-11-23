@@ -9,6 +9,8 @@ export interface AllyItem {
   descEs: string;
   descEn: string;
   accent: string;
+  logoUrl?: string;
+  externalUrl?: string;
 }
 
 export const CENDIS_ALLIES: AllyItem[] = [
@@ -66,6 +68,8 @@ export const CENDIS_ALLIES: AllyItem[] = [
     descEn:
       "Ministry of People's Power for Culture agency dedicated to promoting musical expressions.",
     accent: '#0284C7',
+    logoUrl: '/logos/compania-musica.jpg',
+    externalUrl: 'https://www.instagram.com/companiademusica_ve?avpt=MXI0eDJ0NmtwNW9hOQ==',
   },
   {
     id: 'circo',
@@ -119,13 +123,27 @@ export function AliadosStrip({ language, onSelectAlly }: AliadosStripProps) {
           <button
             key={ally.id}
             type="button"
-            onClick={() => onSelectAlly(ally)}
+            onClick={() => {
+              if (ally.externalUrl) {
+                window.open(ally.externalUrl, '_blank', 'noopener,noreferrer');
+                return;
+              }
+              onSelectAlly(ally);
+            }}
             className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#F1F5F9]/90 hover:bg-white border border-[#94A3B8]/60 hover:border-[#153684]/50 text-[#0F172A] font-display font-bold text-[10px] sm:text-[11px] shadow-sm transition-all active:scale-95"
           >
-            <span
-              className="w-2 h-2 rounded-full shrink-0"
-              style={{ backgroundColor: ally.accent }}
-            />
+            {ally.logoUrl ? (
+              <img
+                src={ally.logoUrl}
+                alt={ally.shortName}
+                className="h-3.5 sm:h-4 w-auto object-contain rounded-sm shrink-0"
+              />
+            ) : (
+              <span
+                className="w-2 h-2 rounded-full shrink-0"
+                style={{ backgroundColor: ally.accent }}
+              />
+            )}
             <span>{ally.shortName}</span>
           </button>
         ))}
