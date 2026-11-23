@@ -7,8 +7,10 @@ interface SocialsModalProps {
   language: Language;
 }
 
+type SocialBrandId = 'instagram' | 'facebook' | 'tiktok' | 'youtube' | 'threads';
+
 interface InstitutionSocial {
-  id: 'instagram' | 'facebook' | 'tiktok';
+  id: SocialBrandId;
   name: string;
   handle: string;
   url: string;
@@ -16,22 +18,28 @@ interface InstitutionSocial {
 
 const CANAL_CULTURA_SOCIALS: InstitutionSocial[] = [
   {
-    id: 'instagram',
-    name: 'Instagram',
-    handle: '@canalcultura.ve',
-    url: 'https://www.instagram.com/',
+    id: 'youtube',
+    name: 'YouTube',
+    handle: '@canalcultura_ve',
+    url: 'https://www.youtube.com/@canalcultura_ve',
   },
   {
-    id: 'facebook',
-    name: 'Facebook',
-    handle: 'Canal Cultura Venezuela',
-    url: 'https://www.facebook.com/',
+    id: 'instagram',
+    name: 'Instagram',
+    handle: '@canalcultura_ve',
+    url: 'https://www.instagram.com/canalcultura_ve/?hl=es-la',
+  },
+  {
+    id: 'threads',
+    name: 'Threads',
+    handle: '@canalcultura_ve',
+    url: 'https://www.threads.com/@canalcultura_ve',
   },
   {
     id: 'tiktok',
     name: 'TikTok',
-    handle: '@canalcultura.ve',
-    url: 'https://www.tiktok.com/',
+    handle: '@canalcultura_ve',
+    url: 'https://tiktok.com/@canalcultura_ve',
   },
 ];
 
@@ -56,7 +64,21 @@ const CENDIS_SOCIALS: InstitutionSocial[] = [
   },
 ];
 
-function BrandIcon({ id }: { id: InstitutionSocial['id'] }) {
+function BrandIcon({ id }: { id: SocialBrandId }) {
+  if (id === 'youtube') {
+    return (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current shrink-0" aria-hidden="true">
+        <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z" />
+      </svg>
+    );
+  }
+  if (id === 'threads') {
+    return (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current shrink-0" aria-hidden="true">
+        <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32l-1.757-1.182C9.8 5.39 11.466 4.74 13.2 4.74h.044c3.21.02 5.146 1.964 5.21 5.224.215.104.423.22.624.348 1.24.793 2.094 1.933 2.536 3.386.678 2.226.447 5.021-1.805 7.226-1.874 1.835-4.132 2.658-7.624 2.676Zm-.618-9.956c-.795.046-1.454.277-1.908.668-.425.367-.638.842-.606 1.39.048.859.654 1.503 1.773 1.442 1.07-.058 2.275-.524 2.548-2.99a11.79 11.79 0 0 0-1.807-.51Z" />
+      </svg>
+    );
+  }
   if (id === 'instagram') {
     return (
       <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current shrink-0" aria-hidden="true">
@@ -78,9 +100,11 @@ function BrandIcon({ id }: { id: InstitutionSocial['id'] }) {
   );
 }
 
-const BRAND_BUTTON_STYLES: Record<InstitutionSocial['id'], string> = {
+const BRAND_BUTTON_STYLES: Record<SocialBrandId, string> = {
+  youtube: 'bg-[#FF0000] text-white shadow-[#FF0000]/25',
   instagram:
     'bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white shadow-[#DD2A7B]/25',
+  threads: 'bg-[#18181B] text-white ring-1 ring-white/25 shadow-slate-900/25',
   facebook: 'bg-[#1877F2] text-white shadow-[#1877F2]/25',
   tiktok: 'bg-[#010101] text-white ring-1 ring-[#25F4EE]/60 shadow-slate-900/25',
 };
