@@ -87,15 +87,17 @@ export const CENDIS_ALLIES: AllyItem[] = [
     accent: '#7C3AED',
   },
   {
-    id: 'aen',
-    shortName: 'AEN',
-    fullNameEs: 'Ente Adscrito AEN · Cultura',
-    fullNameEn: 'AEN Affiliated Cultural Entity',
+    id: 'iaem',
+    shortName: 'IAEM',
+    fullNameEs: 'Instituto de las Artes Escénicas y Musicales (IAEM)',
+    fullNameEn: 'Institute of Performing and Musical Arts (IAEM)',
     descEs:
       'Ente aliado adscrito al Ministerio del Poder Popular para la Cultura en articulación con el CENDIS.',
     descEn:
       "Allied agency attached to the Ministry of People's Power for Culture working alongside CENDIS.",
     accent: '#334155',
+    logoUrl: '/logos/iaem.jpg',
+    externalUrl: 'https://www.instagram.com/plataformaiaem?evlk=NGVsb283NnNzMTFo',
   },
 ];
 
