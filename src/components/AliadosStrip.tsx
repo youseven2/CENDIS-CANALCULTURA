@@ -30,13 +30,15 @@ export const CENDIS_ALLIES: AllyItem[] = [
   {
     id: 'teatro',
     shortName: 'TEATRO',
-    fullNameEs: 'Centro Nacional de Teatro',
-    fullNameEn: 'National Theater Center',
+    fullNameEs: 'Compañía Nacional de Teatro',
+    fullNameEn: 'National Theater Company',
     descEs:
       'Ente del Ministerio del Poder Popular para la Cultura impulsor de las artes escénicas y la red nacional de teatros.',
     descEn:
       "Ministry of People's Power for Culture agency promoting performing arts and the national theater network.",
     accent: '#B12722',
+    logoUrl: '/logos/compania-teatro.jpg',
+    externalUrl: 'https://www.instagram.com/cnteatro_ve?knvt=MXFhdHhwZHpzbnJxYQ==',
   },
   {
     id: 'alba-ciudad',
