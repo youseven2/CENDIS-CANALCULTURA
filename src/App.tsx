@@ -8,6 +8,7 @@ import { EventosModal } from './components/EventosModal';
 import { FloatingSocials } from './components/FloatingSocials';
 import { FooterCintillo } from './components/FooterCintillo';
 import { HeroCarousel } from './components/HeroCarousel';
+import { LiveSignalFloatingModal } from './components/LiveSignalFloatingModal';
 import { OrganigramaModal } from './components/OrganigramaModal';
 import { QuickLinksPanel } from './components/QuickLinksPanel';
 import { ReportModal } from './components/ReportModal';
@@ -32,6 +33,7 @@ export function App() {
   const [isConocenosOpen, setIsConocenosOpen] = useState(false);
   const [isOrganigramaOpen, setIsOrganigramaOpen] = useState(false);
   const [isEventosOpen, setIsEventosOpen] = useState(false);
+  const [isLiveSignalOpen, setIsLiveSignalOpen] = useState(false);
   const [isSocialsOpen, setIsSocialsOpen] = useState(false);
   const [isStatsLoginOpen, setIsStatsLoginOpen] = useState(false);
   const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
@@ -63,6 +65,10 @@ export function App() {
 
   const handleOpenLink = (link: TranslatedLink) => {
     trackContentView(link.id);
+    if (link.modalType === 'live') {
+      setIsLiveSignalOpen(true);
+      return;
+    }
     if (link.externalUrl) {
       window.open(link.externalUrl, '_blank', 'noopener,noreferrer');
       return;
@@ -233,6 +239,13 @@ export function App() {
         onUpdateSlide={updateSlide}
         onDeleteSlide={deleteSlide}
         onResetSlides={resetSlides}
+      />
+
+      {/* Ventana flotante redimensionable de Señal en Vivo (YouTube embebido) */}
+      <LiveSignalFloatingModal
+        isOpen={isLiveSignalOpen}
+        onClose={() => setIsLiveSignalOpen(false)}
+        language={language}
       />
 
       {/* Modal adaptativo para enlaces */}
