@@ -50,6 +50,8 @@ export const CENDIS_ALLIES: AllyItem[] = [
     descEn:
       "Cultural radio station of the Ministry of People's Power for Culture serving music and information.",
     accent: '#0F766E',
+    logoUrl: '/logos/alba-ciudad.jpg',
+    externalUrl: 'https://albaciudad.org/',
   },
   {
     id: 'danza',
