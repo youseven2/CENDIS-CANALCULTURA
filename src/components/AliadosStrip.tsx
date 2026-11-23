@@ -37,7 +37,7 @@ export const CENDIS_ALLIES: AllyItem[] = [
     descEn:
       "Ministry of People's Power for Culture agency promoting performing arts and the national theater network.",
     accent: '#B12722',
-    logoUrl: '/logos/compania-teatro.jpg',
+    logoUrl: '/logos/compania-teatro-v2.jpg',
     externalUrl: 'https://www.instagram.com/cnteatro_ve?knvt=MXFhdHhwZHpzbnJxYQ==',
   },
   {
