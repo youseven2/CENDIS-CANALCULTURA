@@ -17,13 +17,15 @@ export const CENDIS_ALLIES: AllyItem[] = [
   {
     id: 'cenaf',
     shortName: 'CENAF',
-    fullNameEs: 'Centro Nacional de Fotografía',
+    fullNameEs: 'Fundación Centro Nacional de la Fotografía',
     fullNameEn: 'National Photography Center (CENAF)',
     descEs:
       'Ente adscrito al Ministerio del Poder Popular para la Cultura dedicado a la preservación y difusión fotográfica.',
     descEn:
       "Agency attached to the Ministry of People's Power for Culture dedicated to photographic preservation and outreach.",
     accent: '#153684',
+    logoUrl: '/logos/cenaf.jpg',
+    externalUrl: 'https://cenaf.org.ve/',
   },
   {
     id: 'teatro',
