@@ -4,6 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
+  ExternalLink,
   FileText,
   MapPin,
   Navigation,
@@ -318,6 +319,26 @@ export function EventosModal({
                             <strong>{isEs ? 'Dirección:' : 'Address:'}</strong> {evt.address}
                           </span>
                         </p>
+                        <div className="pt-1">
+                          <a
+                            href={
+                              evt.address.trim().startsWith('http')
+                                ? evt.address.trim()
+                                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                    `${evt.place} ${evt.address}`.trim()
+                                  )}`
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#153684] hover:bg-[#0F2761] text-white font-display font-bold text-[11px] shadow-sm transition-colors"
+                          >
+                            <MapPin className="w-3.5 h-3.5 text-[#F9C80E]" />
+                            <span>
+                              {isEs ? 'Abrir en Google Maps' : 'Open in Google Maps'}
+                            </span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        </div>
                       </div>
 
                       <p className="text-xs sm:text-sm text-[#1E293B] leading-relaxed pt-1 border-t border-gray-200">

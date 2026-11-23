@@ -3,9 +3,11 @@ import {
   BarChart3,
   CalendarPlus,
   Edit3,
+  ExternalLink,
   FileDown,
   Image as ImageIcon,
   Lock,
+  MapPin,
   RotateCcw,
   Trash2,
   Upload,
@@ -617,15 +619,33 @@ export function AdminPanelModal({
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#334155] mb-1">
-                      {isEs ? 'Dirección' : 'Address'}
-                    </label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-[11px] font-bold text-[#334155]">
+                        {isEs ? 'Dirección (Google Maps)' : 'Address (Google Maps)'}
+                      </label>
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                          address.trim() || place.trim() || 'Venezuela'
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-bold text-[#153684] hover:text-[#B12722] transition-colors"
+                      >
+                        <MapPin className="w-3 h-3" />
+                        <span>{isEs ? 'Buscar en Google Maps' : 'Find on Google Maps'}</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
                     <input
                       type="text"
                       required
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      placeholder={isEs ? 'Av. Lecuna, Caracas' : 'Main St, Caracas'}
+                      placeholder={
+                        isEs
+                          ? 'Pega la dirección o enlace de Google Maps'
+                          : 'Paste address or Google Maps link'
+                      }
                       className="w-full rounded-xl bg-white border border-[#94A3B8]/70 px-3 py-2 text-xs sm:text-sm text-[#0F172A] focus:outline-none focus:border-[#153684]"
                     />
                   </div>
