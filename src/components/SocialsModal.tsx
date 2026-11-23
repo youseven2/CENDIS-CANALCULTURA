@@ -48,19 +48,13 @@ const CENDIS_SOCIALS: InstitutionSocial[] = [
     id: 'instagram',
     name: 'Instagram',
     handle: '@cendis_ve',
-    url: 'https://www.instagram.com/',
+    url: 'https://www.instagram.com/cendis_ve?gwpx=MWZiamZ1eXMwOTJoaQ==',
   },
   {
-    id: 'facebook',
-    name: 'Facebook',
-    handle: 'Centro Nacional del Disco',
-    url: 'https://www.facebook.com/',
-  },
-  {
-    id: 'tiktok',
-    name: 'TikTok',
+    id: 'threads',
+    name: 'Threads',
     handle: '@cendis_ve',
-    url: 'https://www.tiktok.com/',
+    url: 'https://www.threads.com/@cendis_ve',
   },
 ];
 
