@@ -82,13 +82,15 @@ export const CENDIS_ALLIES: AllyItem[] = [
   {
     id: 'circo',
     shortName: 'CIRCO',
-    fullNameEs: 'Artes Circenses Nacionales',
-    fullNameEn: 'National Circus Arts',
+    fullNameEs: 'Fundación Circo Nacional de Venezuela',
+    fullNameEn: 'National Circus Foundation of Venezuela',
     descEs:
       'Expresión y formación circense adscrita al Ministerio del Poder Popular para la Cultura.',
     descEn:
       "Circus arts training and cultural outreach attached to the Ministry of People's Power for Culture.",
     accent: '#7C3AED',
+    logoUrl: '/logos/circo-nacional.jpg',
+    externalUrl: 'https://www.instagram.com/circovzla?avpt=YTR4emx1d3IyaGpi',
   },
   {
     id: 'iaem',
