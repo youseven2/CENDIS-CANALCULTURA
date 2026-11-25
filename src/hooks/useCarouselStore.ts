@@ -5,7 +5,7 @@ export interface ManagedSlide extends TranslatedSlide {
   imageDataUrl?: string;
 }
 
-const CAROUSEL_STORAGE_KEY = 'cendis_canal_cultura_carousel_v1';
+const CAROUSEL_STORAGE_KEY = 'cendis_canal_cultura_carousel_v2';
 
 const DEFAULT_SLIDES: ManagedSlide[] = TRANSLATIONS.es.carousel.slides.map((s) => ({
   ...s,

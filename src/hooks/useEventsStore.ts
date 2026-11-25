@@ -15,7 +15,7 @@ export interface CulturalEvent {
   createdAt: string;
 }
 
-const EVENTS_STORAGE_KEY = 'cendis_canal_cultura_events_v1';
+const EVENTS_STORAGE_KEY = 'cendis_canal_cultura_events_v2';
 
 /**
  * Persists and manages CENDIS & Canal Cultura monthly calendar events in localStorage.

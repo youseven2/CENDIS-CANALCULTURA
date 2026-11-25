@@ -25,9 +25,9 @@ export interface PortalStatsState {
   topContent: ContentStat[];
 }
 
-const VISITS_STORAGE_KEY = 'cendis_canal_cultura_visits_v2';
-const CONTENT_STORAGE_KEY = 'cendis_canal_cultura_content_views_v2';
-const COUNTRY_STORAGE_KEY = 'cendis_canal_cultura_country_views_v2';
+const VISITS_STORAGE_KEY = 'cendis_canal_cultura_visits_v3';
+const CONTENT_STORAGE_KEY = 'cendis_canal_cultura_content_views_v3';
+const COUNTRY_STORAGE_KEY = 'cendis_canal_cultura_country_views_v3';
 
 const EMPTY_COUNTRIES: Omit<CountryStat, 'visits' | 'percent'>[] = [
   { countryEs: 'Venezuela', countryEn: 'Venezuela', code: 'VE' },
@@ -103,37 +103,28 @@ export function formatDuration(totalSeconds: number): string {
 }
 
 /**
- * Starts all metrics at zero (empty baseline) and records real browser visits,
- * viewing time, country counts, and content views from scratch.
+ * Starts all metrics strictly at zero for clean testing, and provides resetStats().
  */
 export function usePortalStats() {
   const [detected] = useState(() => detectVisitorCountryCode());
   const [sessionSeconds, setSessionSeconds] = useState(0);
 
-  const [totalVisits] = useState<number>(() => {
+  const [totalVisits, setTotalVisits] = useState<number>(() => {
     try {
-      const stored = Number(window.localStorage.getItem(VISITS_STORAGE_KEY) || '0');
-      const next = stored + 1;
-      window.localStorage.setItem(VISITS_STORAGE_KEY, String(next));
-      return next;
+      return Number(window.localStorage.getItem(VISITS_STORAGE_KEY) || '0');
     } catch {
       return 0;
     }
   });
 
-  const [countryVisits] = useState<Record<string, number>>(() => {
+  const [countryVisits, setCountryVisits] = useState<Record<string, number>>(() => {
     try {
       const raw = window.localStorage.getItem(COUNTRY_STORAGE_KEY);
-      const parsed: Record<string, number> = raw ? JSON.parse(raw) : {};
-      const updated = {
-        ...parsed,
-        [detected.code]: (parsed[detected.code] || 0) + 1,
-      };
-      window.localStorage.setItem(COUNTRY_STORAGE_KEY, JSON.stringify(updated));
-      return updated;
+      if (raw) return JSON.parse(raw) as Record<string, number>;
     } catch {
-      return {};
+      // ignore
     }
+    return {};
   });
 
   const [contentViews, setContentViews] = useState<Record<string, number>>(() => {
@@ -163,6 +154,40 @@ export function usePortalStats() {
       }
       return updated;
     });
+
+    setTotalVisits((prev) => {
+      const next = prev + 1;
+      try {
+        window.localStorage.setItem(VISITS_STORAGE_KEY, String(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+
+    setCountryVisits((prev) => {
+      const updated = { ...prev, [detected.code]: (prev[detected.code] || 0) + 1 };
+      try {
+        window.localStorage.setItem(COUNTRY_STORAGE_KEY, JSON.stringify(updated));
+      } catch {
+        // ignore
+      }
+      return updated;
+    });
+  };
+
+  const resetStats = () => {
+    setTotalVisits(0);
+    setCountryVisits({});
+    setContentViews({});
+    setSessionSeconds(0);
+    try {
+      window.localStorage.removeItem(VISITS_STORAGE_KEY);
+      window.localStorage.removeItem(COUNTRY_STORAGE_KEY);
+      window.localStorage.removeItem(CONTENT_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
   };
 
   const totalCountryVisits = Object.values(countryVisits).reduce((acc, v) => acc + v, 0);
@@ -189,5 +214,5 @@ export function usePortalStats() {
     topContent,
   };
 
-  return { stats, trackContentView };
+  return { stats, trackContentView, resetStats };
 }

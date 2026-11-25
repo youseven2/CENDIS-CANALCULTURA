@@ -27,6 +27,7 @@ interface AdminPanelModalProps {
   deviceInfo: DeviceInfo;
   stats: PortalStatsState;
   statsLabels: TranslationBundle['modal'];
+  onResetStats: () => void;
   events: CulturalEvent[];
   onAddEvent: (evt: Omit<CulturalEvent, 'id' | 'createdAt'>) => void;
   onDeleteEvent: (id: string) => void;
@@ -43,6 +44,7 @@ export function AdminPanelModal({
   language,
   stats,
   statsLabels,
+  onResetStats,
   events,
   onAddEvent,
   onDeleteEvent,
@@ -264,14 +266,24 @@ export function AdminPanelModal({
             </div>
 
             {activeTab === 'stats' && (
-              <button
-                type="button"
-                onClick={() => exportStatsToPdf(stats, language)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#B12722] hover:bg-[#8E161B] text-white font-display font-bold text-xs shadow-sm transition-all"
-              >
-                <FileDown className="w-3.5 h-3.5" />
-                <span>{isEs ? 'Reporte PDF' : 'Export PDF'}</span>
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={onResetStats}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#CBD5E1] hover:bg-[#334155] text-[#0F172A] hover:text-white border border-[#94A3B8]/70 font-display font-bold text-xs transition-all"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>{isEs ? 'Poner en 0' : 'Reset to 0'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => exportStatsToPdf(stats, language)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#B12722] hover:bg-[#8E161B] text-white font-display font-bold text-xs shadow-sm transition-all"
+                >
+                  <FileDown className="w-3.5 h-3.5" />
+                  <span>{isEs ? 'Reporte PDF' : 'Export PDF'}</span>
+                </button>
+              </div>
             )}
 
             <button

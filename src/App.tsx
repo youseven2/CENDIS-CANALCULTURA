@@ -23,7 +23,7 @@ import { Language, TRANSLATIONS, TranslatedLink } from './i18n/translations';
 
 export function App() {
   const deviceInfo = useDeviceType();
-  const { stats, trackContentView } = usePortalStats();
+  const { stats, trackContentView, resetStats } = usePortalStats();
   const { events, addEvent, deleteEvent } = useEventsStore();
   const { slides, addSlide, updateSlide, deleteSlide, resetSlides } = useCarouselStore();
   const [language, setLanguage] = useState<Language>('es');
@@ -231,6 +231,7 @@ export function App() {
         deviceInfo={deviceInfo}
         stats={stats}
         statsLabels={t.modal}
+        onResetStats={resetStats}
         events={events}
         onAddEvent={addEvent}
         onDeleteEvent={deleteEvent}
